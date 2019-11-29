@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "查看组织信息",
+  "disableScroll": true,
+  "navigationBarBackgroundColor": "#f9f9f9",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "item-card": "/components/item-card",
+    "uni-popup": "/components/uni-popup"
+  }
+}

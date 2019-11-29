@@ -1,0 +1,55 @@
+
+.release-btn {
+    padding: 8rpx 19rpx;
+    border-radius: 18rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.main {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+.title-input {
+    border-bottom: #eee 1rpx solid;
+}
+.idea-textarea {
+    width: 100%;
+}
+.dynamic-type {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+}
+.upload-video {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+.img-video {
+    width: 626rpx;
+    height: 313rpx;
+}
+.img-default {
+    width: 153rpx;
+    height: 153rpx;
+}
+.upload-images {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+}
+

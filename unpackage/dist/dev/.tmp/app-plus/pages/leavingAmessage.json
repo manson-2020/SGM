@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "disableScroll": true,
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "swiper-tab-head": "/components/topTab"
+  }
+}

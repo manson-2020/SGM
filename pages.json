@@ -1,0 +1,205 @@
+{
+	"pages": [
+		{
+			"path": "pages/index",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/home",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/dynamic",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/leavingAmessage",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/my",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"disableScroll": true,
+				"navigationBarBackgroundColor": "#2b9f60",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/about",
+			"style": {
+				"navigationBarTitleText": "关于我们",
+				"disableScroll": true,
+				"navigationBarBackgroundColor": "#f9f9f9",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/search",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/userInfo",
+			"style": {
+				"disableScroll": true,
+				"navigationStyle": "custom",
+				"navigationBarBackgroundColor": "#f9f9f9",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/organizationInfo",
+			"style": {
+				"navigationBarTitleText": "查看组织信息",
+				"disableScroll": true,
+				"navigationBarBackgroundColor": "#f9f9f9",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/releaseDynamics",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/editData",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/editPhotoWall",
+			"style": {
+				"navigationBarTitleText": "编辑照片墙",
+				"navigationBarBackgroundColor": "#f9f9f9",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/modifyPassword",
+			"style": {
+				"navigationBarTitleText": "修改密码",
+				"navigationBarBackgroundColor": "#f9f9f9",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/joinOrganizationSetting",
+			"style": {
+				"navigationBarTitleText": "入团设置",
+				"navigationBarBackgroundColor": "#f9f9f9",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/accountList",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#f9f9f9",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/comment",
+			"style": {
+				"navigationBarTitleText": "评论",
+				"navigationBarBackgroundColor": "#f9f9f9",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/playVideo",
+			"style": {
+				"navigationStyle": "custom",
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/webView",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#f9f9f9",
+				"disableScroll": true,
+				"navigationBarTextStyle": "black"
+			}
+		}
+	],
+	"tabBar": {
+		"borderStyle": "white",
+		"backgroundColor": "white",
+		"spacing": "9px",
+		"iconWidth": "18px",
+		"fontSize": "9px",
+		"color": "#333",
+		"selectedColor": "#2b9f60",
+		"list": [
+			{
+				"pagePath": "pages/home",
+				"iconPath": "/static/icon-home.png",
+				"selectedIconPath": "/static/icon-home_selected.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/dynamic",
+				"iconPath": "/static/icon-dynamic.png",
+				"selectedIconPath": "/static/icon-dynamic_selected.png",
+				"text": "动态"
+			},
+			{
+				"pagePath": "pages/leavingAmessage",
+				"iconPath": "/static/icon-leavingAmessage.png",
+				"selectedIconPath": "/static/icon-leavingAmessage_selected.png",
+				"text": "留言"
+			},
+			{
+				"pagePath": "pages/my",
+				"iconPath": "/static/icon-my.png",
+				"selectedIconPath": "/static/icon-my_selected.png",
+				"text": "我的"
+			}
+		]
+	},
+	"app-plus": {
+		"softinputNavBar": "none"
+	},
+	"globalStyle": {},
+	"condition": {
+		"current": 0,
+		"list": [
+			{
+				"name": "",
+				"path": "",
+				"query": ""
+			}
+		]
+	}
+}

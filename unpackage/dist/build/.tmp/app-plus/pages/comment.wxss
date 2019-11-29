@@ -1,0 +1,69 @@
+
+.avatar {
+    width: 66rpx;
+    height: 66rpx;
+    border-radius: 50%;
+}
+.comment-item {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+}
+.comment-info {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+.nickname {
+    font-weight: bold;
+}
+.comment-content {
+    line-height: 44rpx;
+}
+.blank {
+    height: 115rpx;
+}
+.comment-frame {
+    position: fixed;
+    width: 100vw;
+    height: 115rpx;
+    bottom: 0;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
+    padding: 0 40rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.comment-input {
+    height: 66rpx;
+    border: 1rpx solid #aaa;
+    border-radius: 33rpx;
+    padding-left: 50rpx;
+}
+.send-btn {
+    height: 100%;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    padding-left: 30rpx;
+}
+

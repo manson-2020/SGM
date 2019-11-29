@@ -1,0 +1,27 @@
+
+page {
+    background-color: #f9f9f9;
+}
+.bg-banner {
+    position: absolute;
+    top: 0;
+    height: 400rpx;
+    width: 100%;
+}
+.main {
+    margin-top: 256rpx;
+    padding: 0 40rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    z-index: 9;
+}
+.wrapper {
+    -webkit-box-shadow: 0 8rpx 12rpx 2rpx rgba(43, 159, 96, 0.12);
+            box-shadow: 0 8rpx 12rpx 2rpx rgba(43, 159, 96, 0.12);
+    border-radius: 14rpx;
+    padding-bottom: 70rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    overflow: hidden;
+}
+
