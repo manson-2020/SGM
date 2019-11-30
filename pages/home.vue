@@ -161,7 +161,7 @@
         position: absolute;
         width: 120%;
         transform: translateY(100%);
-        bottom: 0;
+        bottom: -10rpx;
         background: #f9f9f9;
         z-index: 99999;
         height: 0;

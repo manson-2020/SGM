@@ -10,8 +10,8 @@
                 </navigator>
                 <view class="item-title">
                     <view class="item-name">
-                        <view class="username fs21 color333">{{ item. user_name}}</view>
-                        <view class="school-name fs18 color-666">{{ item. school_name}}</view>
+                        <view class="username fs21 color333">{{ item.user_name }}</view>
+                        <view class="school-name fs18 color-666">{{ item.school_name }}</view>
                     </view>
                     <!-- <view class="degree-fire fs18 color-666">热度：{{ item. degreeFire}}</view> -->
                 </view>

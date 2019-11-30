@@ -11,7 +11,7 @@
                     <view class="second-column">
                         <view
                             class="text fs25 color-9a"
-                        >学校：{{ item.school_address || item.school_name }}</view>
+                        >学校：{{ item.school_address || item.school_name || "未知" }}</view>
                         <view
                             @click="operation(index)"
                             v-if="pageType == 'member'"
@@ -78,6 +78,7 @@
                         });
                         break;
                     case "member":
+                        console.log(123);
                         uni.showModal({
                             title: "是否确认？",
                             content: "",

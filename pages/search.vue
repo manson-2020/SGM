@@ -1,5 +1,6 @@
 <template>
     <view class="root bg-f9">
+        <view class="status" />
         <view class="search">
             <label class="input-box bg-fff">
                 <image class="icon-search_mini" src="/static/icon-search_mini.png" />
@@ -16,9 +17,9 @@
             <navigator open-type="navigateBack" class="submit-cancle color-181818 fs32">取消</navigator>
         </view>
 
-        <view class="search-result">
+        <scroll-view class="f1 search-result"> 
             <item-card tab="search" :params="params" />
-        </view>
+        </scroll-view>
         <!-- <view class="search-module">
             <view class="search-title color-b1b1b1 fs29">搜索指定内容</view>
             <view class="modules color-576b95 fs32">
@@ -72,7 +73,7 @@
     .search {
         flex-direction: row;
         justify-content: space-between;
-        margin: 0 40rpx;
+        margin: 40rpx;
         align-items: center;
         height: 70rpx;
     }
@@ -101,18 +102,4 @@
         align-items: center;
     }
 
-    .modules {
-        margin: 60rpx 40rpx 0;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .module-item {
-        align-items: center;
-        width: 33%;
-        text-align: center;
-        margin-bottom: 58rpx;
-    }
 </style>
