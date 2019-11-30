@@ -1,2 +1,0 @@
-setCssToHead([".",[1],"main { padding: 0 ",[0,40],"; }\n.",[1],"underline { height: ",[0,1],"; margin: ",[0,26]," 0; }\n.",[1],"save-btn { -webkit-box-align: center; -webkit-align-items: center; -ms-flex-align: center; align-items: center; padding: ",[0,30]," 0; border-radius: ",[0,12],"; }\n",],undefined,{path:"./pages/joinOrganizationSetting.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/joinOrganizationSetting.wxml') } }));

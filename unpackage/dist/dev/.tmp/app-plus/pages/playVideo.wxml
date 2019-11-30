@@ -1,1 +1,0 @@
-<view class="root"><video id="video" src="{{videoSrc}}" autoplay data-event-opts="{{[['fullscreenchange',[['goBack',['$event']]]]]}}" bindfullscreenchange="__e"></video></view>

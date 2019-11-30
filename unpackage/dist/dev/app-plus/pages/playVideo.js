@@ -1,2 +1,0 @@
-setCssToHead([".",[1],"root { -webkit-box-pack: center; -webkit-justify-content: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -webkit-align-items: center; -ms-flex-align: center; align-items: center; background: #000; }\n",],undefined,{path:"./pages/playVideo.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/playVideo.wxml') } }));
