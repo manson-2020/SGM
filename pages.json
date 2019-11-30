@@ -157,8 +157,7 @@
 		"borderStyle": "white",
 		"backgroundColor": "white",
 		"spacing": "9px",
-		"iconWidth": "18px",
-		"fontSize": "9px",
+		"fontSize": "14px",
 		"color": "#333",
 		"selectedColor": "#2b9f60",
 		"list": [

@@ -17,20 +17,14 @@
             <navigator open-type="navigateBack" class="submit-cancle color-181818 fs32">取消</navigator>
         </view>
 
-        <scroll-view class="f1 search-result"> 
-            <item-card tab="search" :params="params" />
-        </scroll-view>
-        <!-- <view class="search-module">
-            <view class="search-title color-b1b1b1 fs29">搜索指定内容</view>
-            <view class="modules color-576b95 fs32">
-                <view
-                    v-for="(item, index) in classify"
-                    :key="index"
-                    :style="((index + 1) % 3) && 'border-right: 1px solid #dadada'"
-                    class="module-item"
-                >搜索分类</view>
-            </view>
-        </view>-->
+
+        <view class="main">
+            <swiper class="swiper-box">
+                <swiper-item>
+                    <item-card tab="search" :params="params" />
+                </swiper-item>
+            </swiper>
+        </view>
     </view>
 </template>
 
@@ -65,17 +59,19 @@
 </script>
 
 <style>
-    .root {
-        padding-top: 40rpx;
-        box-sizing: border-box;
+    page {
+        background-color: #f9f9f9;
     }
 
     .search {
+        box-sizing: border-box;
         flex-direction: row;
         justify-content: space-between;
-        margin: 40rpx;
+        margin-top: 40rpx;
+        padding: 0 40rpx;
         align-items: center;
         height: 70rpx;
+        z-index: 999;
     }
 
     .input-box {
@@ -97,9 +93,12 @@
         height: 28rpx;
     }
 
-    .search-result {
-        margin-top: 90rpx;
-        align-items: center;
+    .main {
+        flex: 1;
+        padding-top: 30rpx;
     }
 
+    .swiper-box {
+        height: 100%;
+    }
 </style>

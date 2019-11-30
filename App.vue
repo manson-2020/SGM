@@ -26,9 +26,9 @@
 </script>
 
 <style>
-    * {
+    /* * {
         touch-action: none;
-    }
+    } */
 
     uni-radio .uni-radio-input.uni-radio-input-checked:before {
         font-size: 16rpx;
@@ -378,6 +378,10 @@
 
     .fs22 {
         font-size: 22rpx;
+    }
+
+    .fs23 {
+        font-size: 23rpx;
     }
 
     .fs24 {

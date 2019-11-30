@@ -2,26 +2,26 @@
     <view class="root bg-f9">
         <view class="main bg-fff">
             <view class="mb180 mt45">
-                <view class="color-999 fs22">申请学生组织问题：</view>
+                <view class="color-999 fs28">申请学生组织问题：</view>
                 <view class="underline bg-eee" />
                 <input
                     data-type="problem"
                     @input="inputState"
                     :value="inputValue.problem"
-                    class="fs22"
-                    placeholder-class="fs21 color-aaa"
+                    class="fs28"
+                    placeholder-class="color-aaa"
                     placeholder="请输入申请加入问题或提示语"
                 />
             </view>
 
             <view class="mb180">
-                <view class="color-999 fs22">问题答案：</view>
+                <view class="color-999 fs28">问题答案：</view>
                 <view class="underline bg-eee" />
                 <input
                     data-type="answer"
                     @input="inputState"
                     :value="inputValue.answer"
-                    class="fs22"
+                    class="fs28"
                     placeholder-class="fs21 color-aaa"
                     placeholder="请输入问题答案"
                 />

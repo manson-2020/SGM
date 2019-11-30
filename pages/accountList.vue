@@ -6,31 +6,31 @@
                 <view class="describe f1 ml22">
                     <view class="first-column">
                         <view class="name fs30 color-000">{{ item.nickname }}</view>
-                        <view class="tel fs22 color-bf">{{ item.member_mobile }}</view>
+                        <view class="tel fs26 color-bf">{{ item.member_mobile }}</view>
                     </view>
                     <view class="second-column">
                         <view
-                            class="text fs25 color-9a"
+                            class="text fs26 color-9a"
                         >学校：{{ item.school_address || item.school_name || "未知" }}</view>
                         <view
                             @click="operation(index)"
                             v-if="pageType == 'member'"
-                            class="btn bg-2b9f60 color-fff fs20"
+                            class="btn bg-2b9f60 color-fff fs28"
                         >清除</view>
 
                         <view
                             @click="operation(index, 2)"
                             v-if="pageType == 'examine' && item.status == 0"
-                            class="btn bg-2b9f60 color-fff fs20"
+                            class="btn bg-2b9f60 color-fff fs28"
                         >同意</view>
 
                         <view
                             v-if="pageType == 'examine' && item.status == 1"
-                            class="btn bg-ccc color-fff fs20"
+                            class="btn bg-ccc color-fff fs28"
                         >已拒绝</view>
                         <view
                             v-if="pageType == 'examine' && item.status == 2"
-                            class="btn bg-ccc color-fff fs20"
+                            class="btn bg-ccc color-fff fs28"
                         >已通过</view>
                     </view>
                     <view v-if="pageType != 'fans'" class="third-column">
@@ -38,7 +38,7 @@
                         <view
                             @click="operation(index, 1)"
                             v-if="pageType == 'examine' && item.status == 0"
-                            class="btn bg-fff color-2b9f60 fs20"
+                            class="btn bg-fff color-2b9f60 fs28 border-2b9f60"
                         >不同意</view>
                     </view>
                     <!-- <view v-if="pageType != 'fans'" class="last-column">
@@ -180,5 +180,9 @@
         padding: 5rpx 15rpx;
         border-radius: 15px;
         box-sizing: border-box;
+    }
+
+    .border-2b9f60 {
+        border: 1rpx solid #2b9f60;
     }
 </style>

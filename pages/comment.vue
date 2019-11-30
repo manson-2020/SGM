@@ -8,11 +8,11 @@
             >
                 <image :src="item.url" class="avatar" />
                 <view class="item-main f1 ml25">
-                    <view class="comment-info fs22">
-                        <view class="nickname color-000">{{ item.name }}</view>
-                        <view class="time color-999">{{ item.create_time }}</view>
+                    <view class="comment-info">
+                        <view class="nickname color-000 fs30">{{ item.name }}</view>
+                        <view class="time color-999 fs26">{{ item.create_time }}</view>
                     </view>
-                    <view class="comment-content mt25 color-333 fs24">{{ item.comment }}</view>
+                    <view class="comment-content mt25 color-333 fs26">{{ item.comment }}</view>
                 </view>
             </view>
         </scroll-view>
@@ -71,8 +71,8 @@
 
 <style>
     .avatar {
-        width: 66rpx;
-        height: 66rpx;
+        width: 88rpx;
+        height: 88rpx;
         border-radius: 50%;
     }
 

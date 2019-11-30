@@ -4,13 +4,13 @@
         <view class="main">
             <view class="user-box mt50">
                 <image class="avatar" :src="userInfo.logo || avatar" />
-                <text class="fs25 color-fff mt22">{{ userInfo.name || userInfo.nickname }}</text>
+                <text class="fs30 color-fff mt22">{{ userInfo.name || userInfo.nickname }}</text>
             </view>
             <view class="options mt25">
                 <navigator
                     v-for="(item, index) in options"
                     :key="index"
-                    :class="'options-item fs30 ' + (index && 'bt-d8')"
+                    :class="'options-item fs32 ' + (index && 'bt-d8')"
                     :url="item.url"
                 >
                     <text>{{ item.text }}</text>
@@ -117,8 +117,8 @@
     }
 
     .avatar {
-        width: 120rpx;
-        height: 120rpx;
+        width: 160rpx;
+        height: 160rpx;
         border-radius: 50%;
     }
 

@@ -25,9 +25,10 @@
                         @input="inputState"
                         :data-type="item.type"
                         :value="inputValue[item.type]"
-                        class="input fs25 f1 pb10 pt10"
+                        class="input fs28 f1 pb10 pt10"
                         @click="openPopup"
                         :placeholder="item.placeholder"
+                        :maxlength="item.type == 'phone' ? 11 : 30"
                         :type="(item.type == 'phone' || item.type == 'contact') ? 'number' : (item.type == 'password' || item.type == 'repassword') ? 'password' : 'text'"
                     />
                     <view v-if="!index" class="split" />
@@ -46,32 +47,34 @@
                 maxlength="200"
                 @input="inputState"
                 data-type="introduction"
-                class="textarea fs25"
+                class="textarea fs28"
                 placeholder="学生组织简介（限字200）"
             />
             <view class="avatar_title">
-                <view class="fs25">头像</view>
+                <view class="fs28">头像</view>
                 <view class="fs17">(点击头像选择手机相册图片上传))</view>
             </view>
             <image
                 class="img-default"
-                @click="uploadImage(1, 'avatar')"
-                :src="avatar.path || '/static/img-default.png'"
+                @click="chooseImage(1, 'avatar')"
+                :src="avatar.url"
                 mode="aspectFill"
             />
-            <view class="student-photo fs17">学生组织照片墙(最多10张)</view>
+            <view class="student-photo fs20">学生组织照片墙(最多10张)</view>
             <view class="student-photo-box">
                 <!-- <image class="icon-lr" src="/static/icon-left.png" /> -->
                 <image
+                    mode="aspectFill"
                     v-for="(item, index) in photoWalls"
                     :key="index"
                     class="img-default-mini"
-                    :src="'http://school.shdong.cn' + item.path"
+                    :src="item.url"
                 />
                 <image
+                    mode="aspectFill"
                     v-if="photoWalls.length <= 10"
                     class="img-default-mini"
-                    @click="uploadImage(10, 'photoWalls')"
+                    @click="chooseImage(10, 'photoWalls')"
                     src="/static/img-default.png"
                 />
 
@@ -104,7 +107,7 @@
         components: { uniIcons, uniPopup },
         data() {
             return {
-                avatar: {},
+                avatar: { url: "/static/img-default.png" },
                 tabIndex: 0,
                 inputValue: {
                     phone: "",
@@ -269,7 +272,6 @@
                                     qq: this.inputValue.contact
                                 },
                                 complete: res => {
-                                    console.log(res);
                                     uni.showToast({
                                         title: res.data.msg,
                                         icon: "none",
@@ -295,71 +297,101 @@
                         this.tabIndex = 2;
                         break;
                     case 2:
-                        uni.apiRequest("/api/member/regN", {
-                            data: {
-                                admin_mobile: this.inputValue.phone,
-                                name: this.inputValue.organize,
-                                school_name: this.inputValue.school,
-                                school_address: this.inputValue.position,
-                                type_id: this.inputValue.typeid,
-                                introduce: this.inputValue.introduction,
-                                password: this.inputValue.repassword,
-                                logo: this.avatar.id,
-                                file: this.photoWalls
-                                    .map(item => item.id)
-                                    .toString()
-                            },
-                            complete: res => {
-                                uni.showToast({
-                                    title: res.data.msg,
-                                    icon: "none",
-                                    success() {
-                                        if (res.data.code == 200) {
-                                            uni.setStorageSync(
-                                                "accountInfo",
-                                                res.data.result
-                                            );
-                                            setTimeout(_ => {
-                                                uni.switchTab({
-                                                    url: "/pages/home"
+                        uni.showLoading({ title: "注册中..." });
+                        uni.uploadFile({
+                            url: uni.requestUrl + "/files/image/upload",
+                            filePath: this.avatar.url,
+                            name: "image",
+                            complete: uploadFileRes => {
+                                this.avatar.id = JSON.parse(
+                                    uploadFileRes.data
+                                ).data.id;
+                                this.photoWalls.map((item, index) => {
+                                    uni.uploadFile({
+                                        url: uni.requestUrl + "/files/image/upload",
+                                        filePath: item.url,
+                                        name: "image",
+                                        complete: uploadFileRes => {
+                                            this.photoWalls[index].id = JSON.parse(
+                                                uploadFileRes.data
+                                            ).data.id;
+                                            if (
+                                                this.photoWalls.length - 1 ==
+                                                index
+                                            ) {
+                                                uni.apiRequest("/api/member/regN", {
+                                                    data: {
+                                                        admin_mobile: this
+                                                            .inputValue.phone,
+                                                        name: this.inputValue
+                                                            .organize,
+                                                        school_name: this.inputValue
+                                                            .school,
+                                                        school_address: this
+                                                            .inputValue.position,
+                                                        type_id: this.inputValue
+                                                            .typeid,
+                                                        introduce: this.inputValue
+                                                            .introduction,
+                                                        password: this.inputValue
+                                                            .repassword,
+                                                        logo: this.avatar.id,
+                                                        file: this.photoWalls
+                                                            .map(item => item.id)
+                                                            .toString()
+                                                    },
+                                                    complete: res => {
+                                                        uni.hideLoading();
+                                                        uni.showToast({
+                                                            title: res.data.msg,
+                                                            icon: "none",
+                                                            success() {
+                                                                if (
+                                                                    res.data.code ==
+                                                                    200
+                                                                ) {
+                                                                    uni.setStorageSync(
+                                                                        "accountInfo",
+                                                                        res.data
+                                                                            .result
+                                                                    );
+                                                                    setTimeout(
+                                                                        _ => {
+                                                                            uni.switchTab(
+                                                                                {
+                                                                                    url:
+                                                                                        "/pages/home"
+                                                                                }
+                                                                            );
+                                                                        },
+                                                                        2000
+                                                                    );
+                                                                }
+                                                            }
+                                                        });
+                                                    }
                                                 });
-                                            }, 2000);
+                                            }
                                         }
-                                    }
+                                    });
                                 });
                             }
                         });
                         break;
                 }
             },
-            uploadImage(count, type) {
+            chooseImage(count, type) {
                 uni.chooseImage({
-                    count: type == "avatar" ? count : count - this.photoWalls,
+                    count:
+                        type == "avatar" ? count : count - this.photoWalls.length,
                     success: chooseImageRes => {
-                        uni.uploadFile({
-                            url: uni.requestUrl + "/files/image/upload",
-                            filePath: chooseImageRes.tempFiles[0].path,
-                            name: "image",
-                            complete: uploadFileRes => {
-                                let result = JSON.parse(uploadFileRes.data);
-                                if (type == "avatar") {
-                                    result.data.path =
-                                        uni.requestUrl + result.data.path;
-                                    this.avatar = result.data;
-                                } else {
-                                    this.photoWalls = [
-                                        ...this.photoWalls,
-                                        result.data
-                                    ];
-                                }
-
-                                uni.showToast({
-                                    title: result.msg,
-                                    icon: result.code == 200 ? "success" : "none",
-                                    duration: 1200
-                                });
-                            }
-                        });
+                        if (type == "avatar") {
+                            this.avatar.url = chooseImageRes.tempFilePaths[0];
+                        } else {
+                            chooseImageRes.tempFilePaths.map(item => {
+                                this.photoWalls.push({ url: item });
+                            });
+                        }
                     }
                 });
             },

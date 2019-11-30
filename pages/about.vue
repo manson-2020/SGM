@@ -1,6 +1,6 @@
 <template>
     <view class="root bg-f9">
-        <view class="article color-666 fs26 mlr40 mt10">{{ about.content }}</view>
+        <view class="article color-666 fs28 mlr40 mt10">{{ about.content }}</view>
     </view>
 </template>
 

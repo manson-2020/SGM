@@ -207,8 +207,8 @@
     }
 
     .icon-recover {
-        width: 29rpx;
-        height: 29rpx;
+        width: 40rpx;
+        height: 40rpx;
         transition: all 0.3s;
     }
 

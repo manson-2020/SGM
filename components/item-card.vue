@@ -10,8 +10,8 @@
                 </navigator>
                 <view class="item-title">
                     <view class="item-name">
-                        <view class="username fs21 color333">{{ item.user_name }}</view>
-                        <view class="school-name fs18 color-666">{{ item.school_name }}</view>
+                        <view class="username fs30 color333">{{ item.user_name }}</view>
+                        <view class="school-name fs23 color-666">{{ item.school_name }}</view>
                     </view>
                     <!-- <view class="degree-fire fs18 color-666">热度：{{ item. degreeFire}}</view> -->
                 </view>
@@ -21,17 +21,17 @@
                     <view
                         @click="select(index, 1, 'follow')"
                         v-if="!item.is_follow"
-                        class="follow fs17 color-2b9f60"
+                        class="follow fs26 color-2b9f60"
                     >＋关注</view>
                     <view
                         v-else
                         @click="select(index, 0, 'follow')"
-                        class="follow cancel-follow fs17 color-999"
+                        class="follow cancel-follow fs26 color-999"
                     >已关注</view>
                 </view>
             </view>
             <view
-                class="fs22 color-aaa ml20 mt20"
+                class="fs24 color-aaa ml20 mt20"
             >{{item.original_name ? ('转载于' + item.original_name) : '原创文章'}}</view>
 
             <view v-if="tab == 'organization'" class="article-title fs32 ml22 mr22">{{ item.title }}</view>
@@ -61,10 +61,10 @@
 
             <view class="article">
                 <view v-if="tab != 'organization'" class="article-title fs32">{{ item.title }}</view>
-                <view class="article-describe fs22 color-aaa">{{ item.content }}</view>
+                <view class="article-describe fs30 color-aaa">{{ item.content }}</view>
                 <view class="article-time fs22 text-right color-aaa">{{ item.create_time }}</view>
             </view>
-            <view class="operation-box fs22 color-aaa">
+            <view class="operation-box fs26 color-aaa">
                 <label v-if="!item.is_fabulous" @click="select(index, 1, 'like')" class="operation">
                     <image class="icon-like" src="/static/icon-like.png" />
                     <view class="ml15">{{ item.fabulous }}</view>
@@ -284,8 +284,9 @@
                                     dynamic_id: this.content.data[index].id
                                 },
                                 success: res => {
-                                    res.data.code == 200 &&
-                                        this.content.data[index].forward++;
+                                    if (res.data.code == 200) {
+                                        this.getData();
+                                    }
                                     uni.showToast({
                                         title: res.data.msg,
                                         icon:
@@ -397,8 +398,8 @@
     }
 
     .avatar {
-        width: 63rpx;
-        height: 63rpx;
+        width: 75rpx;
+        height: 75rpx;
         border-radius: 50%;
     }
 
@@ -481,16 +482,16 @@
     }
 
     .icon-like {
-        width: 30rpx;
-        height: 32rpx;
+        width: 40rpx;
+        height: 42rpx;
     }
     .icon-comment {
-        width: 33rpx;
-        height: 28rpx;
+        width: 43rpx;
+        height: 38rpx;
     }
     .icon-share {
-        width: 24rpx;
-        height: 28rpx;
+        width: 34rpx;
+        height: 38rpx;
     }
 
     .video {
@@ -500,5 +501,9 @@
 
     .loading {
         padding: 20rpx 0;
+    }
+
+    .article-title {
+        font-weight: bold;
     }
 </style>

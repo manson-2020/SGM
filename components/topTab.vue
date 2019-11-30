@@ -58,13 +58,13 @@
     }
     .swiper-tab-list {
         color: #999;
-        font-size: 26rpx;
+        font-size: 32rpx;
         margin-right: 77rpx;
         transition: all 0.3s;
     }
     .uni-tab-bar .active {
         color: #000;
-        font-size: 36rpx;
+        font-size: 40rpx;
     }
     .active .swiper-tab-line {
         width: 100%;

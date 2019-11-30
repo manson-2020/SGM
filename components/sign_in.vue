@@ -7,18 +7,19 @@
                     <input
                         @input="inputState"
                         data-type="number"
-                        class="input fs25 f1 pt10 pb10"
+                        class="input fs28 f1 pt10 pb10"
                         type="number"
                         placeholder="手机号"
+                        maxlength="11"
                         placeholder-style="color: #d4d4d4"
                     />
                     <view class="split" />
-                    <view class="fs25 prefix">+86</view>
+                    <view class="fs28 prefix">+86</view>
                     <image class="icon-down" src="/static/icon-down.png" />
                 </view>
             </view>
 
-            <view class="uni-padding-wrap fs25">
+            <view class="uni-padding-wrap fs28">
                 <radio-group @change="inputState" data-type="type" class="radio-group">
                     <label v-for="item in radioGroup" :key="item.id">
                         <radio :value="item.id" color="#2b9f60" :checked="item.isChecked" />
@@ -33,7 +34,7 @@
                     <input
                         @input="inputState"
                         data-type="password"
-                        class="input fs25 f1 pt10 pb10"
+                        class="input fs28 f1 pt10 pb10"
                         type="password"
                         placeholder="登录密码"
                         placeholder-style="color: #d4d4d4"

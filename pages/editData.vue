@@ -11,15 +11,15 @@
             @tapLeft="goBack"
             @tapRight="save"
         >
-            <view slot="right" class="save-btn bg-2b9f60 color-fff fs22">保存</view>
+            <view slot="right" class="save-btn bg-2b9f60 color-fff fs26">保存</view>
         </uni-nav-bar>
         <scroll-view scroll-y class="f1" style="height: auto;">
             <view v-if="userOrorganinzation" class="main mlr40">
                 <view class="frame-item mt20">
-                    <label class="item-account color-999 fs25">
+                    <label class="item-account color-999 fs28">
                         <text>账号：</text>
                         <input
-                            class="f1 fs25"
+                            class="f1 fs28"
                             type="number"
                             maxlength="11"
                             :value="userInfo.member_mobile"
@@ -29,15 +29,15 @@
                             placeholder-class="color-999"
                         />
                     </label>
-                    <label @click="openPopup('gender')" class="item-type color-999 fs25 mt50">
+                    <label @click="openPopup('gender')" class="item-type color-999 fs28 mt50">
                         <text>性别：{{ inputValue.gender || userInfo.sex }}</text>
                         <image class="icon-down" src="/static/icon-down.png" />
                     </label>
 
-                    <label class="item-school color-999 fs25 mt50">
+                    <label class="item-school color-999 fs28 mt50">
                         <text>姓名：</text>
                         <input
-                            class="f1 fs25"
+                            class="f1 fs28"
                             @input="inputState"
                             data-type="member_name"
                             :value="userInfo.member_name"
@@ -46,10 +46,10 @@
                         />
                     </label>
 
-                    <label class="item-address color-999 fs25 mt50">
+                    <label class="item-address color-999 fs28 mt50">
                         <text>学校：</text>
                         <input
-                            class="f1 fs25"
+                            class="f1 fs28"
                             @input="inputState"
                             data-type="school_name"
                             placeholder="请输入学校名称"
@@ -59,9 +59,9 @@
                     </label>
                 </view>
                 <view class="frame-item mt30">
-                    <text class="item-title fs25 color-333">个人简介</text>
+                    <text class="item-title fs28 color-333">个人简介</text>
                     <textarea
-                        class="item-textarea mt35 color-999 fs20"
+                        class="item-textarea mt35 color-999 fs28"
                         data-type="brief"
                         @input="inputState"
                         placeholder="请输入个人简介..."
@@ -70,9 +70,9 @@
                 </view>
 
                 <view class="frame-item mt30">
-                    <text class="item-title fs25 color-333">个人爱好</text>
+                    <text class="item-title fs28 color-333">个人爱好</text>
                     <textarea
-                        class="item-textarea mt35 color-999 fs20"
+                        class="item-textarea mt35 color-999 fs28"
                         data-type="hobby"
                         @input="inputState"
                         placeholder="请输入个人爱好..."
@@ -82,10 +82,10 @@
             </view>
             <view v-else class="main mlr40">
                 <view class="frame-item mt20">
-                    <label class="item-account color-999 fs25">
+                    <label class="item-account color-999 fs28">
                         <text>账号：</text>
                         <input
-                            class="f1 fs25"
+                            class="f1 fs28"
                             type="number"
                             maxlength="11"
                             placeholder="请输入手机号码"
@@ -96,15 +96,15 @@
                         />
                     </label>
 
-                    <label @click="openPopup('type')" class="item-type color-999 fs25 mt50">
+                    <label @click="openPopup('type')" class="item-type color-999 fs28 mt50">
                         <text>类型：{{ inputValue.type.type || userInfo.type }}</text>
                         <image class="icon-down" src="/static/icon-down.png" />
                     </label>
 
-                    <label class="item-school color-999 fs25 mt50">
+                    <label class="item-school color-999 fs28 mt50">
                         <text>学校：</text>
                         <input
-                            class="f1 fs25"
+                            class="f1 fs28"
                             :value="userInfo.school_name"
                             @input="inputState"
                             data-type="school_name"
@@ -113,10 +113,10 @@
                         />
                     </label>
 
-                    <label class="item-address color-999 fs25 mt50">
+                    <label class="item-address color-999 fs28 mt50">
                         <text>地址：</text>
                         <input
-                            class="f1 fs25"
+                            class="f1 fs28"
                             :value="userInfo.school_address"
                             @input="inputState"
                             data-type="school_address"
@@ -126,9 +126,9 @@
                     </label>
                 </view>
                 <view class="frame-item mt30">
-                    <text class="item-title fs25 color-333">学生组织简介</text>
+                    <text class="item-title fs28 color-333">学生组织简介</text>
                     <textarea
-                        class="item-textarea mt35 color-999 fs20"
+                        class="item-textarea mt35 color-999 fs28"
                         :value="userInfo.introduce"
                         @input="inputState"
                         data-type="introduce"
@@ -138,7 +138,7 @@
             </view>
         </scroll-view>
         <uni-popup ref="gender" type="bottom">
-            <view class="popup-box bg-fff fs30 text-center">
+            <view class="popup-box bg-fff fs32 text-center">
                 <view
                     v-for="(item, index) in gender"
                     @click="inputState({type: 'gender', value: item})"
@@ -149,7 +149,7 @@
         </uni-popup>
 
         <uni-popup ref="type" type="bottom">
-            <view class="popup-box bg-fff fs30 text-center">
+            <view class="popup-box bg-fff fs32 text-center">
                 <view
                     v-for="item in types"
                     :key="item.id"
@@ -292,6 +292,7 @@
         background: #fff;
         box-shadow: 0 8rpx 12rpx 2rpx rgba(43, 159, 96, 0.12);
         border-radius: 14rpx;
+        box-sizing: border-box;
         padding: 36rpx 90rpx 50rpx;
     }
 
@@ -320,12 +321,12 @@
     .item-textarea {
         width: 100%;
         height: 106rpx;
+        padding-left: 10rpx;
     }
 
     .popup-box {
         border-top-left-radius: 12rpx;
         border-top-right-radius: 12rpx;
-        padding-bottom: 44px;
     }
 
     .box-item {

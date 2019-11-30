@@ -8,7 +8,7 @@
                 :tabIndex="tabIndex"
                 @tabtap="tabtap"
             />
-            <view @click="getData" class="refresh fs22 color-fff bg-2b9f60">刷新</view>
+            <view @click="getData" class="refresh fs26 color-fff bg-2b9f60">刷新</view>
         </view>
 
         <view class="main">
@@ -24,13 +24,13 @@
                                 <view class="userInfo">
                                     <image class="avatar" :src="item.url" mode="aspectFill" />
                                     <view class="text-box">
-                                        <view class="nickname color-333 fs28">{{ item.name }}</view>
-                                        <view class="time color-aaa fs18">{{ item.create_time }}</view>
+                                        <view class="nickname color-333 fs30">{{ item.name }}</view>
+                                        <view class="time color-aaa fs22">{{ item.create_time }}</view>
                                     </view>
                                 </view>
                                 <view class="ml90">
-                                    <view class="content mt38 color-aaa fs22">{{ item.content }}</view>
-                                    <view class="tel color-aaa fs18 mt38">联系电话：1898451251</view>
+                                    <view class="content mt38 color-aaa fs30">{{ item.content }}</view>
+                                    <view class="tel color-aaa fs28 mt38">联系电话：1898451251</view>
                                 </view>
                             </view>
                         </view>
@@ -54,16 +54,18 @@
                 messageList: [[], []]
             };
         },
-        created() {
+        mounted() {
             this.getData();
         },
         methods: {
             getData() {
                 this.tabBars.map((item, index) => {
-                   
                     uni.apiRequest("/api/User/leavingList", {
                         data: { is_my: index + 1 },
-                        success: res => (this.messageList[index] = res.data.result)
+                        success: res => {
+                            this.messageList[index] = res.data.result;
+                            console.log(this.messageList);
+                        }
                     });
                 });
             },
@@ -120,8 +122,8 @@
     }
 
     .avatar {
-        width: 66rpx;
-        height: 66rpx;
+        width: 75rpx;
+        height: 75rpx;
         border-radius: 50%;
     }
 

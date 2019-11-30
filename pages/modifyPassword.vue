@@ -4,7 +4,7 @@
             <label
                 v-for="(item, index) in inputFrames"
                 :key="index"
-                :class="'frame-item color-999 fs25 ' + (index ? 'mt70' : '')"
+                :class="'frame-item color-999 fs28 ' + (index ? 'mt70' : '')"
             >
                 <image
                     :class="item.className + ' mr18'"
@@ -16,7 +16,7 @@
                     class="f1"
                     password="true"
                     :placeholder="item.placeholder"
-                    placeholder-class="color-999 fs25"
+                    placeholder-class="color-999 fs28"
                 />
             </label>
         </view>
@@ -77,14 +77,14 @@
 
 <style>
     .icon-key {
-        width: 32rpx;
-        height: 32rpx;
+        width: 38rpx;
+        height: 38rpx;
     }
 
     .icon-password,
     .icon-repassword {
-        width: 27rpx;
-        height: 33rpx;
+        width: 33rpx;
+        height: 39rpx;
     }
 
     .frame {

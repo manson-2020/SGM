@@ -29,10 +29,10 @@
                 />
                 <view class="summary ml22">
                     <text class="fs30 color-fff">{{ userInfo.member_mobile || userInfo.name }}</text>
-                    <text class="fs22 color-eee">
-                        <text class="pr15">已关注：{{ userInfo.follow }}</text>|
-                        <text @click="gotoFans" class="pl15">粉丝 {{ userInfo.fans }}</text>
-                    </text>
+                    <view class="fs26 color-eee member-container">
+                        <view class="pr15">已关注：{{ userInfo.follow }}</view>|
+                        <view @click="gotoFans" class="pl15">粉丝 {{ userInfo.fans }}</view>
+                    </view>
                 </view>
                 <view
                     v-if="!isOrganization && accountInfo.id != userId"
@@ -60,13 +60,22 @@
                     </view>
                 </view>
 
-                <view v-else class="options fs22 color-666">
+                <view v-else class="options fs26 color-666">
                     <view class="option-item">
-                        <text
-                            class="color-333 fs32 mr50"
-                        >昵称：{{ userInfo.nickname && (userInfo.nickname.length >= 5 ? (userInfo.nickname.substr(0, 5) + '…') : userInfo.nickname) }}</text>
-                        <text class="mr50">性别：{{ userInfo.sex }}</text>
-                        <text class="mr50">年龄：{{ userInfo.age }}</text>
+                        <text class="color-333 fs32 mr50">
+                            <!-- 昵称： -->
+                            <text
+                                class="fs40"
+                            >{{ userInfo.nickname && (userInfo.nickname.length >= 5 ? (userInfo.nickname.substr(0, 5) + '…') : userInfo.nickname) }}</text>
+                        </text>
+                        <text class="mr50">
+                            <!-- 性别： -->
+                            {{ userInfo.sex }}
+                        </text>
+                        <text class="mr50">
+                            <!-- 年龄： -->
+                            {{ userInfo.age }}岁
+                        </text>
                     </view>
                     <view class="option-item">
                         <text class="mr50">姓名：{{ userInfo.member_name }}</text>
@@ -78,14 +87,14 @@
                     </view>
                 </view>
 
-                <view v-if="isOrganization" class="options fs22 color-666 mt30">
+                <view v-if="isOrganization" class="options fs26 color-666 mt30">
                     <view class="option-item">
                         <image class="icon-introduction" src="/static/icon-introduction.png" />
                         <text class="ml18 f1 mr18 lh-30">{{ userInfo.introduce }}</text>
                     </view>
                 </view>
 
-                <view v-else class="options fs22 color-666 mt30">
+                <view v-else class="options fs26 color-666 mt30">
                     <view class="option-item">
                         <image class="icon-introduction" src="/static/icon-introduction.png" />
                         <text class="ml18 f1 mr18 lh-30">{{ userInfo.brief }}</text>
@@ -109,20 +118,19 @@
 
                 <view v-else class="options mt30 text-center">
                     <view class="option-title color333 fs30 mb18">已申请学生组织</view>
-                    <view class="option-item fs22 color-666">
+                    <view class="option-item fs26 color-666">
                         <text class="column">学生组织名称</text>
                         <text class="column">学校名称</text>
                         <text class="column">加入日期</text>
                     </view>
-                    <view class="option-item fs22 color-666">
-                        <text class="column">川大舞蹈部</text>
-                        <text class="column">四川大学</text>
-                        <text class="column">2019-11-15</text>
-                    </view>
-                    <view class="option-item fs22 color-666">
-                        <text class="column">川大舞蹈部</text>
-                        <text class="column">四川大学</text>
-                        <text class="column">2019-11-15</text>
+                    <view
+                        v-for="item in organizations"
+                        :key="item.id"
+                        class="option-item fs26 color-666"
+                    >
+                        <text class="column">{{ item.name }}</text>
+                        <text class="column">{{ item.school_name }}</text>
+                        <text class="column">{{ item.create_time }}</text>
                     </view>
                 </view>
             </view>
@@ -167,7 +175,8 @@
                     message: ""
                 },
                 messageFlag: false,
-                followFlag: false
+                followFlag: false,
+                organizations: []
             };
         },
         onLoad(options) {
@@ -188,6 +197,15 @@
                     this.userInfo = res.data.result;
                 }
             });
+
+            uni.apiRequest("/api/User/homeOrganization", {
+                data: {
+                    member_id: this.userId
+                },
+                success: res => {
+                    this.organizations = res.data.result.data;
+                }
+            });
         },
         methods: {
             inputState(e) {
@@ -206,6 +224,7 @@
             },
 
             gotoFans() {
+                console.log(123);
                 uni.navigateTo({ url: "/pages/accountList?pageType=fans" });
             },
 
@@ -328,8 +347,8 @@
     }
 
     .avatar {
-        width: 104rpx;
-        height: 104rpx;
+        width: 120rpx;
+        height: 120rpx;
         border-radius: 50%;
         border: rgba(255, 255, 255, 0.3) 6rpx solid;
     }
@@ -413,5 +432,9 @@
     .organization-edit-btn {
         border-radius: 12rpx;
         justify-content: center;
+    }
+
+    .member-container {
+        flex-direction: row;
     }
 </style>

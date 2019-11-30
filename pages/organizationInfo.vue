@@ -56,7 +56,7 @@
                         <view
                             v-if="!(accountInfo.type == userType && accountInfo.id == userId)"
                             @click="openPopup('apply')"
-                            class="apply-btn color-fff fs20 bg-2b9f60 text-center mt45"
+                            class="apply-btn color-fff fs26 bg-2b9f60 text-center mt45"
                         >申请</view>
                     </view>
 
@@ -101,10 +101,10 @@
                             <image class="avatar" mode="aspectFill" :src="organizationInfo.logo" />
                         </view>
                         <view class="attribute text-right">
-                            <view class="fs22 color-333">{{ organizationInfo.name }}</view>
-                            <view class="fs22 color-333 mt25">{{ organizationInfo.type }}</view>
-                            <view class="fs18 color-999 mt22">{{ organizationInfo.school_name }}</view>
-                            <view class="fs18 color-999 mt28">
+                            <view class="fs26 color-333">{{ organizationInfo.name }}</view>
+                            <view class="fs26 color-333 mt25">{{ organizationInfo.type }}</view>
+                            <view class="fs22 color-999 mt22">{{ organizationInfo.school_name }}</view>
+                            <view class="fs22 color-999 mt28">
                                 <text>成员数：{{ organizationInfo.number }}</text>
                                 <text>关注：{{ organizationInfo.fans }}</text>
                             </view>
@@ -112,13 +112,15 @@
                     </view>
 
                     <view class="bottom-row mt15">
-                        <view class="register-time color-333 fs20">注册时间：2019-11-24</view>
+                        <view
+                            class="register-time color-333 fs24"
+                        >注册时间：{{ organizationInfo.create_time }}</view>
                         <view
                             v-if="!(accountInfo.type == userType && accountInfo.id == userId)"
                             @click="openPopup('leavingMessage')"
-                            class="leavingMessage-btn bg-2b9f60 fs18 color-fff"
+                            class="leavingMessage-btn bg-2b9f60 fs26 color-fff"
                         >我的留言</view>
-                        <view class="popup-btn color-333 fs18">
+                        <view class="popup-btn color-333 fs26">
                             <view
                                 v-if="!(accountInfo.type == userType && accountInfo.id == userId)"
                                 @click="confirm('follow')"
@@ -133,18 +135,18 @@
                 </view>
             </view>
             <view class="main mt35">
-                <item-card :organizationId="userId" tab="organization" />
+                <item-card :refresh="refresh" :organizationId="userId" tab="organization" />
             </view>
         </scroll-view>
 
         <uni-popup ref="introduction" type="bottom">
             <view class="popup-box bg-fff mlr40 mb44">
-                <view class="title color-000 fs30 text-center mt45">简介</view>
+                <view class="title color-000 fs35 text-center mt45">简介</view>
                 <scroll-view
-                    class="content fs25 color-999 mt45"
+                    class="content fs30 color-999 mt45"
                     scroll-y
                 >{{ organizationInfo.introduce }}</scroll-view>
-                <view class="btn-box color-333 fs30 mt60">
+                <view class="btn-box color-333 fs32 mt60">
                     <view
                         @click="closePopup('introduction')"
                         class="understand-btn f1 text-center"
@@ -214,21 +216,25 @@
                 followFlag: false,
                 applyFlag: false,
                 userId: "",
-                userType: ""
+                userType: "",
+                refresh: true
             };
         },
-        onLoad(options) {
-            this.userId = options.userId;
-            this.userType = options.type;
+        onShow() {
+            this.refresh = !this.refresh;
             uni.apiRequest("/api/User/user_info", {
                 data: {
-                    user_id: options.userId,
+                    user_id: this.userId,
                     type: 3
                 },
                 success: res => {
                     this.organizationInfo = res.data.result;
                 }
             });
+        },
+        onLoad(options) {
+            this.userId = options.userId;
+            this.userType = options.type;
         },
         methods: {
             inputState(e) {
