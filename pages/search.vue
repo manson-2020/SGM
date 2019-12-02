@@ -17,7 +17,6 @@
             <navigator open-type="navigateBack" class="submit-cancle color-181818 fs32">取消</navigator>
         </view>
 
-
         <view class="main">
             <swiper class="swiper-box">
                 <swiper-item>
@@ -100,5 +99,9 @@
 
     .swiper-box {
         height: 100%;
+    }
+
+    .submit-cancle {
+        padding: 10rpx;
     }
 </style>

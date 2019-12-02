@@ -2,7 +2,7 @@
     <view class="root bg-f9">
         <view class="status" />
         <view class="header">
-            <navigator class="icon-search" url="/pages/search" hover-class="navigator-hover">
+            <navigator url="/pages/search" hover-class="navigator-hover">
                 <image class="icon-search" src="/static/icon-search.png" />
             </navigator>
             <view class="ml77">
@@ -95,11 +95,13 @@
     .icon-search {
         width: 38rpx;
         height: 40rpx;
+        margin: 10rpx;
     }
 
     .icon-add {
         width: 40rpx;
         height: 40rpx;
+        margin: 10rpx;
     }
 
     .main {

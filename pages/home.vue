@@ -2,7 +2,7 @@
     <view class="root bg-f9">
         <view class="status" />
         <view class="header">
-            <navigator class="icon-search" url="/pages/search" hover-class="navigator-hover">
+            <navigator url="/pages/search" hover-class="navigator-hover">
                 <image class="icon-search" src="/static/icon-search.png" />
             </navigator>
             <view class="drop-down" @click="dropDown">
@@ -56,6 +56,7 @@
                         :tab="index ? 'hot' : 'new'"
                         :dynamicId="dynamicId"
                         :refresh="refresh"
+                        @browsePicture="browsePicture"
                     />
                 </swiper-item>
             </swiper>
@@ -66,6 +67,16 @@
             @click="hide"
             class="shelter full-screen"
         />
+
+        <uni-popup ref="browsePopup" type="center" :maskClick="false">
+            <view class="popup-box">
+                <swiper class="swiper">
+                    <swiper-item v-for="(item, index) in pictures" :key="index" class="swiper-item">
+                        <image :src="test" />
+                    </swiper-item>
+                </swiper>
+            </view>
+        </uni-popup>
     </view>
 </template>
 
@@ -73,11 +84,13 @@
     import swiperTabHead from "@/components/topTab";
     import bwSwiper from "@/components/bw-swiper";
     import itemCard from "@/components/item-card";
+    import uniPopup from "@/components/uni-popup";
     export default {
         components: {
             swiperTabHead,
             bwSwiper,
-            itemCard
+            itemCard,
+            uniPopup
         },
         data() {
             return {
@@ -89,11 +102,14 @@
                 types: [],
                 dynamicId: null,
                 dynamicName: "全部类型",
-                refresh: true
+                refresh: true,
+                test: ""
             };
         },
         onShow() {
             this.refresh = !this.refresh;
+            this.dynamicName = "全部类型";
+            this.tabIndex = 0;
             uni.apiRequest("/api/member/getType", {
                 success: res => {
                     this.types = [
@@ -138,6 +154,12 @@
                 this.dynamicId = this.types[index].id;
                 this.dynamicName = this.types[index].type;
                 this.hide();
+            },
+            browsePicture(items) {
+                this.test = items[0];
+                this.$refs.browsePopup.open();
+                uni.hideTabBar();
+                console.log(items);
             }
         }
     };
@@ -161,7 +183,8 @@
         position: absolute;
         width: 120%;
         transform: translateY(100%);
-        bottom: -10rpx;
+        bottom: -18rpx;
+        left: -18rpx;
         background: #f9f9f9;
         z-index: 99999;
         height: 0;
@@ -180,6 +203,7 @@
     .icon-search {
         width: 38rpx;
         height: 40rpx;
+        margin: 10rpx;
     }
 
     .icon-down_black {
@@ -227,5 +251,21 @@
     .tabBar {
         margin-top: 50rpx;
         margin-left: 38rpx;
+    }
+
+    .popup-box {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .swiper {
+        width: 100%;
+        height: 100%;
+    }
+
+    .swiper-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>

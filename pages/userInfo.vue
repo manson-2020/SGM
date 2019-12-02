@@ -1,5 +1,5 @@
 <template>
-    <view class="root bg-f9">
+    <view class="root">
         <uni-nav-bar
             :shadow="false"
             :border="false"
@@ -18,8 +18,9 @@
                 src="/static/icon-leavingAmessage_selected.png"
             />
         </uni-nav-bar>
-        <image class="avatar-fill bg-2b9f60" :src="avatar || userInfo.logo" mode="aspectFill" />
-        <scroll-view scroll-y>
+        <scroll-view scroll-y class="scroll-view f1">
+            <image class="avatar-fill bg-2b9f60" :src="avatar || userInfo.logo" mode="aspectFill" />
+
             <view class="header mt70">
                 <image
                     @click="changeAvatar"
@@ -62,11 +63,9 @@
 
                 <view v-else class="options fs26 color-666">
                     <view class="option-item">
-                        <text class="color-333 fs32 mr50">
+                        <text class="color-333 fs40 mr50">
                             <!-- 昵称： -->
-                            <text
-                                class="fs40"
-                            >{{ userInfo.nickname && (userInfo.nickname.length >= 5 ? (userInfo.nickname.substr(0, 5) + '…') : userInfo.nickname) }}</text>
+                            {{ userInfo.nickname && (userInfo.nickname.length >= 9 ? (userInfo.nickname.substr(0, 9) + '…') : userInfo.nickname) }}
                         </text>
                         <text class="mr50">
                             <!-- 性别： -->
@@ -224,7 +223,6 @@
             },
 
             gotoFans() {
-                console.log(123);
                 uni.navigateTo({ url: "/pages/accountList?pageType=fans" });
             },
 
@@ -330,11 +328,22 @@
 </script>
 
 <style>
+    page {
+        background: #f9f9f9;
+    }
+
     .avatar-fill {
         position: absolute;
         width: 100vw;
         height: 326rpx;
         filter: blur(9rpx) brightness(0.8);
+        z-index: -1;
+        top: 0;
+    }
+
+    .scroll-view {
+        z-index: 0;
+        height: auto;
     }
 
     .header,

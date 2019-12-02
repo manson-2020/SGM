@@ -78,8 +78,7 @@
                         });
                         break;
                     case "member":
-                        console.log(123);
-                        uni.showModal({
+                         uni.showModal({
                             title: "是否确认？",
                             content: "",
                             success: res => {

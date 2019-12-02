@@ -53,6 +53,7 @@
                 <image
                     v-for="(previewItem, index) in item.file"
                     :key="index"
+                    @click="browsePicture(index)"
                     :src="previewItem"
                     :class="'mb11 ' + (((index + 1) % 3 != 0) && 'mr11')"
                     mode="aspectFill"
@@ -303,6 +304,10 @@
             playVideo(src) {
                 uni.navigateTo({ url: `/pages/playVideo?src=${src}` });
             },
+
+            browsePicture(index) {
+                this.$emit("browsePicture", this.content.data[index].file);
+            },
             loadMore() {
                 if (this.content.params.page >= this.content.params.all_page) {
                     this.loadingText = "没有更多了~";
@@ -505,5 +510,11 @@
 
     .article-title {
         font-weight: bold;
+    }
+
+    .popup-box {
+        width: 100vw;
+        height: 100vh;
+        z-index: 9999;
     }
 </style>

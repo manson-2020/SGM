@@ -14,18 +14,42 @@
         <view class="main">
             <swiper class="swiper-box" :current="tabIndex" @change="tabChange">
                 <swiper-item v-for="(item, index) in tabBars" :key="index">
-                    <scroll-view class="scroll-view" scroll-y>
+                    <scroll-view class="scroll-view" scroll-y v-if="index == 0">
                         <view class="main-wrapper">
-                            <view
-                                v-for="item in messageList[index]"
-                                :key="item.id"
-                                class="main-item"
-                            >
+                            <view v-for="item in messageList0" :key="item.id" class="main-item">
                                 <view class="userInfo">
-                                    <image class="avatar" :src="item.url" mode="aspectFill" />
+                                    <navigator
+                                        class="avatar"
+                                        :url="'/pages/' + (item.type == 2 ? 'user' : 'organization') + 'Info' + '?userId=' + item.get_id + '&type=' + item.type"
+                                    >
+                                        <image class="avatar" :src="item.url" mode="aspectFill" />
+                                    </navigator>
+                                    <view class="text-box">
+                                        <view class="nickname color-333 fs30">{{ item.get_name }}</view>
+                                        <view class="time color-aaa fs22 mt10">{{ item.create_time }}</view>
+                                    </view>
+                                </view>
+                                <view class="ml90">
+                                    <view class="content mt38 color-aaa fs30">{{ item.content }}</view>
+                                    <view class="tel color-aaa fs28 mt38">联系电话：1898451251</view>
+                                </view>
+                            </view>
+                        </view>
+                    </scroll-view>
+
+                    <scroll-view class="scroll-view" scroll-y v-if="index == 1">
+                        <view class="main-wrapper">
+                            <view v-for="item in messageList1" :key="item.id" class="main-item">
+                                <view class="userInfo">
+                                    <navigator
+                                        class="avatar"
+                                        :url="'/pages/' + (item.type == 2 ? 'user' : 'organization') + 'Info' + '?userId=' + item.member_id + '&type=' + item.type"
+                                    >
+                                        <image class="avatar" :src="item.url" mode="aspectFill" />
+                                    </navigator>
                                     <view class="text-box">
                                         <view class="nickname color-333 fs30">{{ item.name }}</view>
-                                        <view class="time color-aaa fs22">{{ item.create_time }}</view>
+                                        <view class="time color-aaa fs22 mt10">{{ item.create_time }}</view>
                                     </view>
                                 </view>
                                 <view class="ml90">
@@ -51,10 +75,11 @@
             return {
                 tabIndex: 0,
                 tabBars: ["给我的留言", "我给的留言"],
-                messageList: [[], []]
+                messageList0: [],
+                messageList1: []
             };
         },
-        mounted() {
+        onShow() {
             this.getData();
         },
         methods: {
@@ -63,8 +88,8 @@
                     uni.apiRequest("/api/User/leavingList", {
                         data: { is_my: index + 1 },
                         success: res => {
-                            this.messageList[index] = res.data.result;
-                            console.log(this.messageList);
+                            console.log(res);
+                            this["messageList" + index] = res.data.result;
                         }
                     });
                 });
@@ -140,7 +165,6 @@
     .time {
         flex-direction: row;
         align-items: center;
-        overflow: hidden;
     }
 
     .time::before {

@@ -71,7 +71,6 @@
                     type: this.accountInfo.type
                 },
                 success: res => {
-                    console.log(res)
                     this.userInfo = res.data.result;
                 }
             });

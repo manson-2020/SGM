@@ -302,7 +302,6 @@
                                     icon: res.data.code == 200 ? "success" : "none",
                                     success: _ => {
                                         if (res.data.code == 200) {
-                                            // console.log(res);
                                             this.followFlag = false;
                                             this.organizationInfo.is_follow = Number(
                                                 !this.organizationInfo.is_follow
