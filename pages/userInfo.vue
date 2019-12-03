@@ -79,12 +79,12 @@
                         </text>
                     </view>
                     <view class="option-item">
-                        <text class="mr50">姓名：{{ userInfo.member_name }}</text>
+                        <text v-if="userInfo.member_name" class="mr50">姓名：{{ userInfo.member_name }}</text>
                         <text class="mr50">学校全名称：{{ userInfo.school_name }}</text>
                     </view>
                     <view class="option-item">
-                        <text class="mr50">QQ：{{ userInfo.qq }}</text>
-                        <text class="mr50">邮箱：{{ userInfo.email }}</text>
+                        <text class="mr50 f1">QQ：{{ userInfo.qq }}</text>
+                        <text class="mr50 f1">邮箱：{{ userInfo.email }}</text>
                     </view>
                 </view>
 
@@ -425,6 +425,9 @@
         flex-direction: row;
         align-items: baseline;
         margin: 15rpx 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .column {
