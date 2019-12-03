@@ -95,12 +95,15 @@
                     </view>
                 </view>
 
-                <view v-else class="options fs26 color-666 mt30">
-                    <view class="option-item">
+                <view
+                    v-if="!isOrganization && (userInfo.brief || userInfo.hobby)"
+                    class="options fs26 color-666 mt30"
+                >
+                    <view v-if="userInfo.brief" class="option-item">
                         <image class="icon-introduction" src="/static/icon-introduction.png" />
                         <text class="ml18 f1 mr18 lh-30">{{ userInfo.brief }}</text>
                     </view>
-                    <view class="option-item">
+                    <view v-if="userInfo.hobby" class="option-item">
                         <image class="icon-hobby" src="/static/icon-hobby.png" />
                         <text class="ml18 f1 mr18 lh-30">{{ userInfo.hobby }}</text>
                     </view>
