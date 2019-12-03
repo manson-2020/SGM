@@ -67,6 +67,7 @@
                     mode="aspectFill"
                     v-for="(item, index) in photoWalls"
                     :key="index"
+                    @click="deletePhoto(index)"
                     class="img-default-mini"
                     :src="item.url"
                 />
@@ -303,82 +304,91 @@
                             filePath: this.avatar.url,
                             name: "image",
                             complete: uploadFileRes => {
-                                this.avatar.id = JSON.parse(
-                                    uploadFileRes.data
-                                ).data.id;
-                                this.photoWalls.map((item, index) => {
-                                    uni.uploadFile({
-                                        url: uni.requestUrl + "/files/image/upload",
-                                        filePath: item.url,
-                                        name: "image",
-                                        complete: uploadFileRes => {
-                                            this.photoWalls[index].id = JSON.parse(
-                                                uploadFileRes.data
-                                            ).data.id;
-                                            if (
-                                                this.photoWalls.length - 1 ==
-                                                index
-                                            ) {
-                                                uni.apiRequest("/api/member/regN", {
-                                                    data: {
-                                                        admin_mobile: this
-                                                            .inputValue.phone,
-                                                        name: this.inputValue
-                                                            .organize,
-                                                        school_name: this.inputValue
-                                                            .school,
-                                                        school_address: this
-                                                            .inputValue.position,
-                                                        type_id: this.inputValue
-                                                            .typeid,
-                                                        introduce: this.inputValue
-                                                            .introduction,
-                                                        password: this.inputValue
-                                                            .repassword,
-                                                        logo: this.avatar.id,
-                                                        file: this.photoWalls
-                                                            .map(item => item.id)
-                                                            .toString()
-                                                    },
-                                                    complete: res => {
-                                                        uni.hideLoading();
-                                                        uni.showToast({
-                                                            title: res.data.msg,
-                                                            icon: "none",
-                                                            success() {
-                                                                if (
-                                                                    res.data.code ==
-                                                                    200
-                                                                ) {
-                                                                    uni.setStorageSync(
-                                                                        "accountInfo",
-                                                                        res.data
-                                                                            .result
-                                                                    );
-                                                                    setTimeout(
-                                                                        _ => {
-                                                                            uni.switchTab(
-                                                                                {
-                                                                                    url:
-                                                                                        "/pages/home"
-                                                                                }
-                                                                            );
-                                                                        },
-                                                                        2000
-                                                                    );
-                                                                }
-                                                            }
-                                                        });
+                                let avatarResult = JSON.parse(uploadFileRes.data);
+                                if (avatarResult.code == 200) {
+                                    this.avatar.id = avatarResult.data.id;
+                                    let times = Number();
+                                    this.photoWalls.map((item, index) => {
+                                        uni.uploadFile({
+                                            url:
+                                                uni.requestUrl +
+                                                "/files/image/upload",
+                                            filePath: item.url,
+                                            name: "image",
+                                            complete: uploadFileRes => {
+                                                let photoWallResult = JSON.parse(
+                                                    uploadFileRes.data
+                                                );
+                                                if (photoWallResult.code == 200) {
+                                                    times++;
+                                                    this.photoWalls[
+                                                        index
+                                                    ].id = JSON.parse(
+                                                        uploadFileRes.data
+                                                    ).data.id;
+                                                    if (
+                                                        this.photoWalls.length ==
+                                                        times
+                                                    ) {
+                                                        this.submitData();
                                                     }
-                                                });
+                                                } else {
+                                                    uni.hideLoading();
+                                                    uni.showToast({
+                                                        title: `照片墙图${index +
+                                                            1}：${result.msg}`,
+                                                        icon: "none"
+                                                    });
+                                                }
                                             }
-                                        }
+                                        });
                                     });
-                                });
+                                } else {
+                                }
                             }
                         });
                         break;
                 }
+            },
+
+            submitData() {
+                uni.apiRequest("/api/member/regN", {
+                    data: {
+                        admin_mobile: this.inputValue.phone,
+                        name: this.inputValue.organize,
+                        school_name: this.inputValue.school,
+                        school_address: this.inputValue.position,
+                        type_id: this.inputValue.typeid,
+                        introduce: this.inputValue.introduction,
+                        password: this.inputValue.repassword,
+                        logo: this.avatar.id,
+                        file: this.photoWalls.map(item => item.id).toString()
+                    },
+                    complete: res => {
+                        uni.hideLoading();
+                        uni.showToast({
+                            title: res.data.msg,
+                            icon: "none",
+                            success() {
+                                if (res.data.code == 200) {
+                                    uni.setStorageSync(
+                                        "accountInfo",
+                                        res.data.result
+                                    );
+                                    setTimeout(_ => {
+                                        uni.switchTab({
+                                            url: "/pages/home"
+                                        });
+                                    }, 2000);
+                                }
+                            }
+                        });
+                    }
+                });
+            },
+
+            deletePhoto(index) {
+                this.photoWalls.splice(index, 1);
             },
             chooseImage(count, type) {
                 uni.chooseImage({

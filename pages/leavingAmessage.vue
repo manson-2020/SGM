@@ -26,7 +26,9 @@
                                     </navigator>
                                     <view class="text-box">
                                         <view class="nickname color-333 fs30">{{ item.get_name }}</view>
-                                        <view class="time color-aaa fs22 mt10">{{ item.create_time }}</view>
+                                        <view
+                                            class="time color-aaa fs22 mt10"
+                                        >{{ item.create_time }}</view>
                                     </view>
                                 </view>
                                 <view class="ml90">
@@ -34,6 +36,10 @@
                                     <view class="tel color-aaa fs28 mt38">联系电话：1898451251</view>
                                 </view>
                             </view>
+                            <view
+                                v-if="!messageList0.length"
+                                class="loading text-center color-aaa fs33"
+                            >暂无更多内容~</view>
                         </view>
                     </scroll-view>
 
@@ -49,7 +55,9 @@
                                     </navigator>
                                     <view class="text-box">
                                         <view class="nickname color-333 fs30">{{ item.name }}</view>
-                                        <view class="time color-aaa fs22 mt10">{{ item.create_time }}</view>
+                                        <view
+                                            class="time color-aaa fs22 mt10"
+                                        >{{ item.create_time }}</view>
                                     </view>
                                 </view>
                                 <view class="ml90">
@@ -57,6 +65,10 @@
                                     <view class="tel color-aaa fs28 mt38">联系电话：1898451251</view>
                                 </view>
                             </view>
+                            <view
+                                v-if="!messageList1.length"
+                                class="loading text-center color-aaa fs33"
+                            >暂无更多内容~</view>
                         </view>
                     </scroll-view>
                 </swiper-item>
@@ -84,12 +96,14 @@
         },
         methods: {
             getData() {
+                uni.showLoading({ title: "加载中" });
                 this.tabBars.map((item, index) => {
                     uni.apiRequest("/api/User/leavingList", {
                         data: { is_my: index + 1 },
-                        success: res => {
-                            console.log(res);
-                            this["messageList" + index] = res.data.result;
+                        complete: res => {
+                            uni.hideLoading();
+                            res.data.code == 200 &&
+                                (this["messageList" + index] = res.data.result);
                         }
                     });
                 });
@@ -174,5 +188,9 @@
         width: 20rpx;
         height: 20rpx;
         margin-right: 9rpx;
+    }
+
+    .loading {
+        padding: 20rpx 0;
     }
 </style>

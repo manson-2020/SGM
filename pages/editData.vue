@@ -14,125 +14,77 @@
             <view slot="right" class="save-btn bg-2b9f60 color-fff fs26">保存</view>
         </uni-nav-bar>
         <scroll-view scroll-y class="f1" style="height: auto;">
-            <view v-if="userOrorganinzation" class="main mlr40">
+            <view v-if="userOrorganization" class="main mlr40">
                 <view class="frame-item mt20">
-                    <label class="item-account color-999 fs28">
-                        <text>账号：</text>
+                    <label
+                        v-for="(item, index) in options.user.firstItmes"
+                        :key="index"
+                        @click="openPopup('gender', item.disabled)"
+                        :class="'item-label color-999 fs28 ' + (index && 'mt50')"
+                    >
+                        <text>{{ item.text }}：{{ item.type == 'image' ? (inputValue.gender || userInfo[item.dataType]) : "" }}</text>
+                        <image v-if="item.type == 'image'" :class="item.className" :src="item.src" />
                         <input
-                            class="f1 fs28"
-                            type="number"
-                            maxlength="11"
-                            :value="userInfo.member_mobile"
-                            @input="inputState"
-                            data-type="member_mobile"
-                            placeholder="请输入电话号码"
-                            placeholder-class="color-999"
-                        />
-                    </label>
-                    <label @click="openPopup('gender')" class="item-type color-999 fs28 mt50">
-                        <text>性别：{{ inputValue.gender || userInfo.sex }}</text>
-                        <image class="icon-down" src="/static/icon-down.png" />
-                    </label>
-
-                    <label class="item-school color-999 fs28 mt50">
-                        <text>姓名：</text>
-                        <input
+                            v-else
                             class="f1 fs28"
                             @input="inputState"
-                            data-type="member_name"
-                            :value="userInfo.member_name"
-                            placeholder="请输入姓名"
-                            placeholder-class="color-999"
-                        />
-                    </label>
-
-                    <label class="item-address color-999 fs28 mt50">
-                        <text>学校：</text>
-                        <input
-                            class="f1 fs28"
-                            @input="inputState"
-                            data-type="school_name"
-                            placeholder="请输入学校名称"
-                            :value="userInfo.school_name"
+                            :maxlength="item.maxlength"
+                            :data-type="item.dataType"
+                            :value="userInfo[item.dataType]"
+                            :placeholder="item.placeholder"
                             placeholder-class="color-999"
                         />
                     </label>
                 </view>
-                <view class="frame-item mt30">
-                    <text class="item-title fs28 color-333">个人简介</text>
+                <view
+                    v-for="(item, index) in options.user.secondItems"
+                    :key="index"
+                    class="frame-item mt30"
+                >
+                    <text class="item-title fs28 color-333">{{ item.text }}</text>
                     <textarea
                         class="item-textarea mt35 color-999 fs28"
-                        data-type="brief"
+                        :data-type="item.dataType"
                         @input="inputState"
-                        placeholder="请输入个人简介..."
-                        :value="userInfo.brief"
-                    />
-                </view>
-
-                <view class="frame-item mt30">
-                    <text class="item-title fs28 color-333">个人爱好</text>
-                    <textarea
-                        class="item-textarea mt35 color-999 fs28"
-                        data-type="hobby"
-                        @input="inputState"
-                        placeholder="请输入个人爱好..."
-                        :value="userInfo.hobby"
+                        :placeholder="item.placeholder"
+                        :value="userInfo[item.dataType]"
                     />
                 </view>
             </view>
             <view v-else class="main mlr40">
                 <view class="frame-item mt20">
-                    <label class="item-account color-999 fs28">
-                        <text>账号：</text>
+                    <label
+                        v-for="(item, index) in options.organization.firstItmes"
+                        :key="index"
+                        @click="openPopup('type', item.disabled)"
+                        :class="'item-label color-999 fs28 ' + (index && 'mt50')"
+                    >
+                        <text>{{ item.text }}：{{ item.type == 'image' ? (inputValue.type.type || userInfo[item.dataType]) : "" }}</text>
+                        <image v-if="item.type == 'image'" :class="item.className" :src="item.src" />
                         <input
+                            v-else
                             class="f1 fs28"
-                            type="number"
-                            maxlength="11"
-                            placeholder="请输入手机号码"
                             @input="inputState"
-                            data-type="admin_mobile"
-                            :value="userInfo.admin_mobile"
-                            placeholder-class="color-999"
-                        />
-                    </label>
-
-                    <label @click="openPopup('type')" class="item-type color-999 fs28 mt50">
-                        <text>类型：{{ inputValue.type.type || userInfo.type }}</text>
-                        <image class="icon-down" src="/static/icon-down.png" />
-                    </label>
-
-                    <label class="item-school color-999 fs28 mt50">
-                        <text>学校：</text>
-                        <input
-                            class="f1 fs28"
-                            :value="userInfo.school_name"
-                            @input="inputState"
-                            data-type="school_name"
-                            placeholder="学校全称"
-                            placeholder-class="color-999"
-                        />
-                    </label>
-
-                    <label class="item-address color-999 fs28 mt50">
-                        <text>地址：</text>
-                        <input
-                            class="f1 fs28"
-                            :value="userInfo.school_address"
-                            @input="inputState"
-                            data-type="school_address"
-                            placeholder="学校地址"
+                            :maxlength="item.maxlength"
+                            :data-type="item.dataType"
+                            :value="userInfo[item.dataType]"
+                            :placeholder="item.placeholder"
                             placeholder-class="color-999"
                         />
                     </label>
                 </view>
-                <view class="frame-item mt30">
-                    <text class="item-title fs28 color-333">学生组织简介</text>
+                <view
+                    v-for="(item, index) in options.organization.secondItems"
+                    :key="index"
+                    class="frame-item mt30"
+                >
+                    <text class="item-title fs28 color-333">{{ item.text }}</text>
                     <textarea
                         class="item-textarea mt35 color-999 fs28"
-                        :value="userInfo.introduce"
+                        :data-type="item.dataType"
                         @input="inputState"
-                        data-type="introduce"
-                        placeholder="学生组织简介..."
+                        :placeholder="item.placeholder"
+                        :value="userInfo[item.dataType]"
                     />
                 </view>
             </view>
@@ -169,7 +121,8 @@
         components: { uniNavBar, uniPopup },
         data() {
             return {
-                userOrorganinzation: true,
+                userOrorganization: true,
+                accountInfo: uni.getStorageSync("accountInfo"),
                 inputValue: {
                     member_mobile: "",
                     member_name: "",
@@ -181,16 +134,142 @@
                     school_name: "",
                     school_address: "",
                     introduce: "",
-                    type: ""
+                    type: "",
+                    nickname: "",
+                    age: "",
+                    qq: "",
+                    email: ""
                 },
                 gender: ["男", "女"],
                 userInfo: {},
                 types: [],
-                accountInfo: uni.getStorageSync("accountInfo")
+                options: {
+                    user: {
+                        firstItmes: [
+                            {
+                                text: "账号",
+                                type: "number",
+                                maxlength: 11,
+                                dataType: "member_mobile",
+                                placeholder: "请输入电话号码",
+                                disabled: true
+                            },
+                            {
+                                text: "性别",
+                                type: "image",
+                                dataType: "sex",
+                                className: "icon-down",
+                                src: "/static/icon-down.png"
+                            },
+                            {
+                                text: "昵称",
+                                type: "text",
+                                maxlength: 16,
+                                dataType: "nickname",
+                                placeholder: "请输入昵称",
+                                disabled: true
+                            },
+                            {
+                                text: "姓名",
+                                type: "text",
+                                maxlength: 9,
+                                dataType: "member_name",
+                                placeholder: "请输入姓名",
+                                disabled: true
+                            },
+                            {
+                                text: "年龄",
+                                type: "number",
+                                maxlength: 3,
+                                dataType: "age",
+                                placeholder: "请输入你的年龄",
+                                disabled: true
+                            },
+                            {
+                                text: "学校",
+                                type: "text",
+                                maxlength: 16,
+                                dataType: "school_name",
+                                placeholder: "请输入学校名称",
+                                disabled: true
+                            },
+                            {
+                                text: "QQ",
+                                type: "number",
+                                maxlength: 10,
+                                dataType: "qq",
+                                placeholder: "请输入QQ号码",
+                                disabled: true
+                            },
+                            {
+                                text: "邮箱",
+                                type: "text",
+                                maxlength: 20,
+                                dataType: "email",
+                                placeholder: "请输入你的邮箱",
+                                disabled: true
+                            }
+                        ],
+                        secondItems: [
+                            {
+                                text: "个人简介",
+                                dataType: "brief",
+                                placeholder: "请输入个人简介..."
+                            },
+                            {
+                                text: "个人爱好",
+                                dataType: "hobby",
+                                placeholder: "请输入个人爱好..."
+                            }
+                        ]
+                    },
+                    organization: {
+                        firstItmes: [
+                            {
+                                text: "账号",
+                                type: "number",
+                                maxlength: 11,
+                                dataType: "admin_mobile",
+                                placeholder: "请输入手机号码",
+                                disabled: true
+                            },
+                            {
+                                text: "类型",
+                                type: "image",
+                                dataType: "type",
+                                className: "icon-down",
+                                src: "/static/icon-down.png"
+                            },
+                            {
+                                text: "学校",
+                                type: "text",
+                                maxlength: 16,
+                                dataType: "school_name",
+                                placeholder: "请输入学校全称",
+                                disabled: true
+                            },
+                            {
+                                text: "地址",
+                                type: "text",
+                                maxlength: 25,
+                                dataType: "school_address",
+                                placeholder: "请输入学校地址",
+                                disabled: true
+                            }
+                        ],
+                        secondItems: [
+                            {
+                                text: "学生组织简介",
+                                dataType: "introduce",
+                                placeholder: "学生组织简介..."
+                            }
+                        ]
+                    }
+                }
             };
         },
         onLoad(options) {
-            this.userOrorganinzation = options.type == 2 ? true : false;
+            this.userOrorganization = options.type == 2 ? true : false;
         },
 
         created() {
@@ -207,7 +286,8 @@
                     fail(res) {
                         uni.showToast({
                             title: "服务器连接失败，请重试！",
-                            icon: "none"
+                            icon: "none",
+                            mask: true
                         });
                     }
                 });
@@ -235,12 +315,17 @@
                             sex: this.inputValue.gender == "男" ? 1 : 0,
                             school_name: this.inputValue.school_name,
                             brief: this.inputValue.brief,
-                            hobby: this.inputValue.hobby
+                            hobby: this.inputValue.hobby,
+                            nickname: this.inputValue.nickname,
+                            age: this.inputValue.age,
+                            qq: this.inputValue.qq,
+                            email: this.inputValue.email
                         },
                         success: res => {
                             uni.showToast({
                                 title: res.data.msg,
                                 icon: res.data.code == 200 ? "success" : "none",
+                                mask: true,
                                 success: _ =>
                                     setTimeout(() => {
                                         res.data.code == 200 && uni.navigateBack();
@@ -261,6 +346,7 @@
                             uni.showToast({
                                 title: res.data.msg,
                                 icon: res.data.code == 200 ? "success" : "none",
+                                mask: true,
                                 success: _ =>
                                     setTimeout(() => {
                                         res.data.code == 200 && uni.navigateBack();
@@ -270,8 +356,12 @@
                     });
                 }
             },
-            openPopup(type) {
-                this.$refs[type].open();
+            openPopup(type, disabled) {
+                if (disabled) {
+                    return false;
+                } else {
+                    this.$refs[type].open();
+                }
             },
 
             closePopup(type) {
@@ -296,17 +386,10 @@
         padding: 36rpx 90rpx 50rpx;
     }
 
-    .item-account,
-    .item-type,
-    .item-school,
-    .item-address {
-        border-bottom: solid 1rpx #d4d4d4;
+    .item-label {
+        /* border-bottom: solid 1rpx #d4d4d4; */
         padding: 0 16rpx;
-    }
-
-    .item-type {
         justify-content: space-between;
-        padding-bottom: 15rpx;
     }
 
     .icon-down {

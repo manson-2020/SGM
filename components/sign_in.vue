@@ -54,13 +54,13 @@
                 inputValue: {
                     number: 0,
                     password: "",
-                    type: ""
+                    type: 2
                 },
                 radioGroup: [
                     {
                         id: "2",
                         text: "会员",
-                        isChecked: false
+                        isChecked: true
                     },
                     {
                         id: "3",

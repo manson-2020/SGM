@@ -11,20 +11,20 @@
             @tapLeft="goBack"
             @tapRight="release"
         >
-            <view slot="right" class="release-btn bg-2b9f60 color-fff fs22">发布</view>
+            <view slot="right" class="release-btn bg-2b9f60 color-fff fs26">发布</view>
         </uni-nav-bar>
         <view class="main mlr40">
             <input
                 @input="inputState"
                 data-type="title"
-                class="fs22 mt45 pb20 title-input"
+                class="fs26 mt45 pb20 title-input"
                 placeholder="在这里写下发布动态的标题"
                 placeholder-class="color-999"
             />
             <textarea
                 @input="inputState"
                 data-type="content"
-                class="fs20 mt28 idea-textarea"
+                class="fs26 mt28 idea-textarea"
                 placeholder="写下此刻的想法(限字500)..."
                 placeholder-class="color-aaa"
                 maxlength="500"
@@ -33,7 +33,7 @@
             <radio-group @change="inputState" data-type="type" class="dynamic-type">
                 <label
                     @click="radio(index)"
-                    class="type-radio color-333 fs22 f1"
+                    class="type-radio color-333 fs28 f1"
                     v-for="(item, index) in radioGroup"
                     :key="index"
                 >
@@ -44,10 +44,10 @@
 
             <view v-for="(item, index) in radioGroup" :key="index">
                 <view v-if="item.text == '视频' && item.isChecked" class="mt50 upload-video">
-                    <video v-if="video.path" :src="requestUrl + video.path" />
+                    <video v-if="video.tempFilePath" :src="video.tempFilePath" />
                     <image
                         v-else
-                        @click="uploadVideo"
+                        @click="chooseVideo"
                         class="img-video"
                         src="/static/img-video.png"
                     />
@@ -58,6 +58,7 @@
                             mode="aspectFill"
                             v-for="(item, index) in images"
                             :key="index"
+                            @click="deletePhoto(index)"
                             class="img-default mr22 mb22"
                             :src="item.path"
                         />
@@ -68,7 +69,7 @@
                         class="img-default"
                         src="/static/img-default.png"
                     />
-                    <view class="fs22 color-ccc mt33">{{ images.length }}/6 最多能上传6张图片</view>
+                    <view class="fs24 color-ccc mt33">{{ images.length }}/6 最多能上传6张图片</view>
                 </view>
             </view>
         </view>
@@ -102,6 +103,9 @@
             goBack() {
                 uni.navigateBack();
             },
+            deletePhoto(index) {
+                this.images.splice(index, 1);
+            },
             submitData(data) {
                 uni.apiRequest("/api/Dynamic/add", {
                     data,
@@ -127,32 +131,65 @@
                     title: this.inputValue.title,
                     content: this.inputValue.content
                 };
+                uni.showLoading({ title: "处理中...", mask: true });
                 if (this.inputValue.type == "视频") {
                     delete data.file;
-                    data.video = this.video.id;
-                    this.submitData(data);
-                } else {
-                    delete data.video;
-                    uni.showLoading({ title: "处理中..." });
-                    let times = Number();
-                    this.images.map((item, index) => {
+                    if (this.video.tempFilePath) {
                         uni.uploadFile({
-                            url: uni.requestUrl + "/files/image/upload",
-                            filePath: item.path,
-                            name: "image",
+                            url: uni.requestUrl + "/files/file/upload",
+                            filePath: this.video.tempFilePath,
+                            name: "file",
                             complete: uploadFileRes => {
                                 let result = JSON.parse(uploadFileRes.data);
-                                this.images[index].id = result.data.id;
-                                times++;
-                                if (times == this.images.length) {
-                                    data.file = this.images
-                                        .map(item => item.id)
-                                        .toString();
-                                    this.submitData(data);
-                                }
+                                data.video = result.data.id;
+                                uni.hideLoading();
+                                uni.showToast({
+                                    title: result.msg,
+                                    icon: result.code == 200 ? "success" : "none",
+                                    success: _ => {
+                                        if (result.code == 200) {
+                                            this.submitData(data);
+                                        }
+                                    }
+                                });
                             }
                         });
-                    });
+                    } else {
+                        this.submitData(data);
+                    }
+                } else if (this.inputValue.type == "图片") {
+                    delete data.video;
+                    if (this.images.length) {
+                        let times = Number();
+                        this.images.map((item, index) => {
+                            uni.uploadFile({
+                                url: uni.requestUrl + "/files/image/upload",
+                                filePath: item.path,
+                                name: "image",
+                                complete: uploadFileRes => {
+                                    let result = JSON.parse(uploadFileRes.data);
+                                    if (result.code == 200) {
+                                        times++;
+                                        this.images[index].id = result.data.id;
+                                        if (times == this.images.length) {
+                                            data.file = this.images
+                                                .map(item => item.id)
+                                                .toString();
+                                            this.submitData(data);
+                                        }
+                                    } else {
+                                        uni.hideLoading();
+                                        uni.showToast({
+                                            title: `图${index + 1}：${result.msg}`,
+                                            icon: "none"
+                                        });
+                                    }
+                                }
+                            });
+                        });
+                    } else {
+                        this.submitData(data);
+                    }
                 }
             },
             radio(index) {
@@ -161,31 +198,19 @@
                 });
                 this.radioGroup[index].isChecked = true;
             },
-            uploadVideo() {
+            chooseVideo() {
                 uni.chooseVideo({
                     count: 1,
-                    success: res => {
-                        uni.showLoading({ title: "上传中...", mask: true });
-                        uni.uploadFile({
-                            url: uni.requestUrl + "/files/file/upload", //非真实的接口地址
-                            filePath: res.tempFilePath,
-                            name: "file",
-                            success: uploadFileRes => {
-                                this.video = JSON.parse(uploadFileRes.data).data;
-                                uni.hideLoading();
-                            }
-                        });
-                    }
+                    success: chooseVideoRes => (this.video = chooseVideoRes)
                 });
             },
             chooseImage() {
                 uni.chooseImage({
                     count: 6 - this.images.length,
-                    success: chooseImageRes => {
-                        chooseImageRes.tempFilePaths.map(item => {
-                            this.images.push({ path: item });
-                        });
-                    }
+                    success: chooseImageRes =>
+                        chooseImageRes.tempFilePaths.map(item =>
+                            this.images.push({ path: item })
+                        )
                 });
             }
         }

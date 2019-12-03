@@ -58,6 +58,19 @@
                 "speech" : {
                     "ifly" : {}
                 }
+            },
+            "splashscreen" : {
+                "android" : {
+                    "hdpi" : ""
+                }
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "C:/Users/54594/Desktop/android/mipmap-hdpi/ic_launcher.png",
+                    "xhdpi" : "C:/Users/54594/Desktop/android/mipmap-xhdpi/ic_launcher.png",
+                    "xxhdpi" : "C:/Users/54594/Desktop/android/mipmap-xxhdpi/ic_launcher.png",
+                    "xxxhdpi" : "C:/Users/54594/Desktop/android/mipmap-xxxhdpi/ic_launcher.png"
+                }
             }
         }
     },

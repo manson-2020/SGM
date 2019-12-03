@@ -3,6 +3,7 @@
         <view
             :class="[ani, animation ? 'ani' : '', !custom ? 'uni-custom' : '']"
             class="uni-popup__mask"
+            :style="'background: rgba(0, 0, 0, ' + opacity + ');'"
             @click="close(true)"
         />
         <view
@@ -44,6 +45,10 @@
             show: {
                 type: Boolean,
                 default: true
+            },
+            opacity: {
+                type: [String, Number],
+                default: 0.6
             }
         },
         data() {
@@ -113,7 +118,6 @@
             left: 0;
             right: 0;
             z-index: 998;
-            background: rgba(0, 0, 0, 0.6);
             opacity: 0;
 
             &.ani {
@@ -166,7 +170,6 @@
             }
 
             &.uni-custom {
-
                 &.center {
                     & .uni-popup__wrapper-box {
                         position: relative;

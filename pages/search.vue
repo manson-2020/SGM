@@ -1,5 +1,5 @@
 <template>
-    <view class="root bg-f9">
+    <view class="root">
         <view class="status" />
         <view class="search">
             <label class="input-box bg-fff">

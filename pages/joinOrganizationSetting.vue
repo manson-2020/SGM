@@ -22,7 +22,7 @@
                     @input="inputState"
                     :value="inputValue.answer"
                     class="fs28"
-                    placeholder-class="fs21 color-aaa"
+                    placeholder-class="color-aaa"
                     placeholder="请输入问题答案"
                 />
             </view>

@@ -29,7 +29,7 @@
                     @click="clickItem(index)"
                 >
                     <view v-if="item[imageKey] && !item[videoKey]">
-                        <image :src="item[imageKey]" :style="{'height':swiperHeight+'rpx'}" />
+                        <image :src="item[imageKey]" :style="{'height':swiperHeight+'rpx'}" mode="aspectFill" />
                     </view>
                 </swiper-item>
             </swiper>

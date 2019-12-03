@@ -135,7 +135,12 @@
                 </view>
             </view>
             <view class="main mt35">
-                <item-card :refresh="refresh" :organizationId="userId" tab="organization" />
+                <item-card
+                    :refresh="refresh"
+                    :organizationId="userId"
+                    tab="organization"
+                    @browsePicture="browsePicture"
+                />
             </view>
         </scroll-view>
 
@@ -191,6 +196,21 @@
                 </view>
             </view>
         </uni-popup>
+
+        <uni-popup ref="browsePopup" type="center" opacity="0.9" :maskClick="false">
+            <view class="popup-box browse">
+                <swiper :current="currentIndex" class="swiper">
+                    <swiper-item
+                        @click="hideBrowse"
+                        v-for="(item, index) in pictures"
+                        :key="index"
+                        class="swiper-item"
+                    >
+                        <image :src="item" mode="widthFix" style="width: 100%;" />
+                    </swiper-item>
+                </swiper>
+            </view>
+        </uni-popup>
     </view>
 </template>
 
@@ -206,7 +226,7 @@
         data() {
             return {
                 avatar: getApp().globalData.avatar,
-                organizationInfo: {},
+                organizationInfo: { file: [] },
                 accountInfo: uni.getStorageSync("accountInfo"),
                 inputValue: {
                     message: "",
@@ -217,7 +237,9 @@
                 applyFlag: false,
                 userId: "",
                 userType: "",
-                refresh: true
+                refresh: true,
+                pictures: [],
+                currentIndex: 0
             };
         },
         onShow() {
@@ -227,9 +249,7 @@
                     user_id: this.userId,
                     type: 3
                 },
-                success: res => {
-                    this.organizationInfo = res.data.result;
-                }
+                success: res => (this.organizationInfo = res.data.result)
             });
         },
         onLoad(options) {
@@ -313,6 +333,17 @@
                         });
                         break;
                 }
+            },
+            browsePicture(items) {
+                this.pictures = items.pictures;
+                this.currentIndex = items.pitureIndex;
+                this.$refs.browsePopup.open();
+                uni.hideTabBar();
+            },
+            hideBrowse() {
+                this.pictures = Array();
+                this.$refs.browsePopup.close();
+                uni.showTabBar();
             }
         }
     };
@@ -463,5 +494,21 @@
     .cancel-btn,
     .submit-btn {
         padding: 30rpx 0;
+    }
+
+    .popup-box.browse {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .swiper {
+        width: 100%;
+        height: 100%;
+    }
+
+    .swiper-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>

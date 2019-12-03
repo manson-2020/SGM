@@ -456,6 +456,10 @@
         background-color: #fff;
     }
 
+    .bg-000 {
+        background-color: #000;
+    }
+
     .bg-ccc {
         background-color: #ccc;
     }

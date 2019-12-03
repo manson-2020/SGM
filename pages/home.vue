@@ -35,13 +35,13 @@
                     :style="'transform: rotateZ('+(hideBwSwiper ? 0 : 180)+'deg)'"
                 />
             </view>
-            <view class="bw-swiper" :style="'height: ' + (hideBwSwiper ? '336rpx': '0')">
+            <view class="bw-swiper" :style="'height: ' + (hideBwSwiper ? '300rpx': '0')">
                 <bw-swiper
                     imageKey="url"
                     :swiperList="swiperList"
                     nextMargin="20rpx"
                     previousMargin="40rpx"
-                    :swiperHeight="336"
+                    :swiperHeight="300"
                     :swiperType="true"
                     :indicatorDots="false"
                     @clickItem="clickItem"
@@ -68,11 +68,16 @@
             class="shelter full-screen"
         />
 
-        <uni-popup ref="browsePopup" type="center" :maskClick="false">
+        <uni-popup ref="browsePopup" type="center" opacity="0.9" :maskClick="false">
             <view class="popup-box">
-                <swiper class="swiper">
-                    <swiper-item v-for="(item, index) in pictures" :key="index" class="swiper-item">
-                        <image :src="test" />
+                <swiper :current="currentIndex" class="swiper">
+                    <swiper-item
+                        @click="hideBrowse"
+                        v-for="(item, index) in pictures"
+                        :key="index"
+                        class="swiper-item"
+                    >
+                        <image :src="item" mode="widthFix" style="width: 100%;" />
                     </swiper-item>
                 </swiper>
             </view>
@@ -103,7 +108,8 @@
                 dynamicId: null,
                 dynamicName: "全部类型",
                 refresh: true,
-                test: ""
+                pictures: [],
+                currentIndex: 0
             };
         },
         onShow() {
@@ -156,10 +162,15 @@
                 this.hide();
             },
             browsePicture(items) {
-                this.test = items[0];
+                this.pictures = items.pictures;
+                this.currentIndex = items.pitureIndex;
                 this.$refs.browsePopup.open();
                 uni.hideTabBar();
-                console.log(items);
+            },
+            hideBrowse() {
+                this.pictures = Array();
+                this.$refs.browsePopup.close();
+                uni.showTabBar();
             }
         }
     };

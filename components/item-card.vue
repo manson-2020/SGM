@@ -37,25 +37,22 @@
             <view v-if="tab == 'organization'" class="article-title fs32 ml22 mr22">{{ item.title }}</view>
             <view v-if="item.video" class="preview-video mt22">
                 <view
+                    @click="playVideo(item.video)"
                     class="preview-video-image"
                     :style="'background-image: url(' + requestUrl + item.video_img +');'"
                 >
-                    <image
-                        @click="playVideo(item.video)"
-                        class="icon-play"
-                        src="/static/icon-play.png"
-                    />
+                    <image class="icon-play" src="/static/icon-play.png" />
                     <view class="shelter" />
                 </view>
             </view>
 
-            <view v-else class="preview-picture mt22 mlr20">
+            <view v-if="item.file.length" class="preview-picture mt22 mlr20">
                 <image
-                    v-for="(previewItem, index) in item.file"
-                    :key="index"
-                    @click="browsePicture(index)"
-                    :src="previewItem"
-                    :class="'mb11 ' + (((index + 1) % 3 != 0) && 'mr11')"
+                    v-for="(pitureItem, pitureIndex) in item.file"
+                    :key="pitureIndex"
+                    @click="browsePicture(index, pitureIndex)"
+                    :src="pitureItem"
+                    :class="'mb11 ' + (((pitureIndex + 1) % 3 != 0) && 'mr11')"
                     mode="aspectFill"
                 />
             </view>
@@ -305,8 +302,11 @@
                 uni.navigateTo({ url: `/pages/playVideo?src=${src}` });
             },
 
-            browsePicture(index) {
-                this.$emit("browsePicture", this.content.data[index].file);
+            browsePicture(index, pitureIndex) {
+                this.$emit("browsePicture", {
+                    pictures: this.content.data[index].file,
+                    pitureIndex
+                });
             },
             loadMore() {
                 if (this.content.params.page >= this.content.params.all_page) {
@@ -471,6 +471,7 @@
 
     .article-describe {
         margin-top: 22rpx;
+        word-break: break-word;
     }
 
     .article-time {

@@ -1,6 +1,7 @@
 <template>
     <scroll-view class="root bg-f9" scroll-y>
-        <view class="bg-fff pt50 pb50">
+        <view v-if="!list.length" class="text-center color-aaa fs33 pt50">暂无更多内容</view>
+        <view v-else class="bg-fff pt50 pb50">
             <view v-for="(item, index) in list" :key="index" class="list mb50">
                 <image class="avatar" :src="item.url || avatar" />
                 <view class="describe f1 ml22">
@@ -32,8 +33,14 @@
                             v-if="pageType == 'examine' && item.status == 2"
                             class="btn bg-ccc color-fff fs28"
                         >已通过</view>
+
+                        <view
+                            @click="operation(index)"
+                            v-if="pageType == 'follow'"
+                            class="btn bg-ccc color-fff fs28"
+                        >取消关注</view>
                     </view>
-                    <view v-if="pageType != 'fans'" class="third-column">
+                    <view v-if="pageType == 'examine' || pageType == 'member'" class="third-column">
                         <view class="text fs25 color-9a">申请日期：{{ item.create_time }}</view>
                         <view
                             @click="operation(index, 1)"
@@ -78,7 +85,7 @@
                         });
                         break;
                     case "member":
-                         uni.showModal({
+                        uni.showModal({
                             title: "是否确认？",
                             content: "",
                             success: res => {
@@ -100,7 +107,29 @@
                             }
                         });
                         break;
-                    default:
+                    case "fans":
+                        break;
+                    case "follow":
+                        uni.apiRequest("/api/Dynamic/follow", {
+                            data: {
+                                type: this.list[index].type,
+                                user_id: this.list[index].id,
+                                is_follow: 0
+                            },
+                            complete: res => {
+                                if (res.data.code == 200) {
+                                    uni.showToast({
+                                        title: res.data.msg,
+                                        icon:
+                                            res.data.code == 200
+                                                ? "success"
+                                                : "none",
+                                        success: _ =>
+                                            res.data.code == 200 && this.pageData()
+                                    });
+                                }
+                            }
+                        });
                         break;
                 }
             },
@@ -136,6 +165,17 @@
                             }
                         });
                         uni.setNavigationBarTitle({ title: "组织成员" });
+                        break;
+                    case "follow":
+                        uni.apiRequest("/api/User/follow_fans", {
+                            data: {
+                                follow_fans: 1
+                            },
+                            success: res => {
+                                this.list = res.data.result;
+                            }
+                        });
+                        uni.setNavigationBarTitle({ title: "关注的人" });
                         break;
                 }
             }

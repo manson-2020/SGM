@@ -31,12 +31,14 @@
                 <view class="summary ml22">
                     <text class="fs30 color-fff">{{ userInfo.member_mobile || userInfo.name }}</text>
                     <view class="fs26 color-eee member-container">
-                        <view class="pr15">已关注：{{ userInfo.follow }}</view>|
-                        <view @click="gotoFans" class="pl15">粉丝 {{ userInfo.fans }}</view>
+                        <navigator url="/pages/accountList?pageType=follow">关注 {{ userInfo.follow }}</navigator>
+                        <text style="margin: 0 20rpx;">|</text>
+                        <navigator url="/pages/accountList?pageType=fans">粉丝 {{ userInfo.fans }}</navigator>
                     </view>
                 </view>
                 <view
-                    v-if="!isOrganization && accountInfo.id != userId"
+                    v-if="userId != accountInfo.id ||
+                    userType != accountInfo.type"
                     class="btn-box fs20 text-center"
                 >
                     <view
@@ -65,7 +67,7 @@
                     <view class="option-item">
                         <text class="color-333 fs40 mr50">
                             <!-- 昵称： -->
-                            {{ userInfo.nickname && (userInfo.nickname.length >= 9 ? (userInfo.nickname.substr(0, 9) + '…') : userInfo.nickname) }}
+                            {{ userInfo.nickname && (userInfo.nickname.length > 9 ? (userInfo.nickname.substr(0, 9) + '…') : userInfo.nickname) }}
                         </text>
                         <text class="mr50">
                             <!-- 性别： -->
@@ -280,48 +282,77 @@
             },
 
             changeAvatar() {
-                uni.chooseImage({
-                    count: 1,
-                    success: chooseImageRes => {
-                        uni.uploadFile({
-                            url: uni.requestUrl + "/files/image/upload",
-                            filePath: chooseImageRes.tempFiles[0].path,
-                            name: "image",
-                            complete: uploadFileRes => {
-                                let result = JSON.parse(uploadFileRes.data);
-                                result.data.path =
-                                    uni.requestUrl + result.data.path;
-                                if (result.code == 200) {
-                                    uni.apiRequest(
-                                        `/api/User/${
-                                            this.userType == 2
-                                                ? "update_info"
-                                                : "update_organization"
-                                        }`,
-                                        {
-                                            data: { logo: result.data.id },
-                                            complete: res => {
-                                                uni.showToast({
-                                                    title: res.data.msg,
-                                                    icon:
-                                                        res.data.code == 200
-                                                            ? "success"
-                                                            : "none",
-                                                    duration: 1200,
-                                                    success: _ => {
-                                                        res.data.code == 200 &&
-                                                            (this.avatar =
-                                                                result.data.path);
-                                                    }
-                                                });
+                if (
+                    this.userId == this.accountInfo.id &&
+                    this.userType == this.accountInfo.type
+                ) {
+                    uni.showModal({
+                        title: "提示",
+                        content: "是否确认更换头像？",
+                        confirmColor: "#2b9f60",
+                        success: res => {
+                            if (res.confirm) {
+                                uni.chooseImage({
+                                    count: 1,
+                                    success: chooseImageRes => {
+                                        uni.uploadFile({
+                                            url:
+                                                uni.requestUrl +
+                                                "/files/image/upload",
+                                            filePath:
+                                                chooseImageRes.tempFiles[0].path,
+                                            name: "image",
+                                            complete: uploadFileRes => {
+                                                let result = JSON.parse(
+                                                    uploadFileRes.data
+                                                );
+                                                result.data.path =
+                                                    uni.requestUrl +
+                                                    result.data.path;
+                                                if (result.code == 200) {
+                                                    uni.apiRequest(
+                                                        `/api/User/${
+                                                            this.userType == 2
+                                                                ? "update_info"
+                                                                : "update_organization"
+                                                        }`,
+                                                        {
+                                                            data: {
+                                                                logo: result.data.id
+                                                            },
+                                                            complete: res => {
+                                                                uni.showToast({
+                                                                    title:
+                                                                        res.data
+                                                                            .msg,
+                                                                    icon:
+                                                                        res.data
+                                                                            .code ==
+                                                                        200
+                                                                            ? "success"
+                                                                            : "none",
+                                                                    duration: 1200,
+                                                                    success: _ => {
+                                                                        res.data
+                                                                            .code ==
+                                                                            200 &&
+                                                                            (this.avatar =
+                                                                                result.data.path);
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+                                                    );
+                                                }
                                             }
-                                        }
-                                    );
-                                }
+                                        });
+                                    }
+                                });
                             }
-                        });
-                    }
-                });
+                        }
+                    });
+                }
+                return false;
             }
         }
     };

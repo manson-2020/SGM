@@ -22,20 +22,41 @@
         <view class="main">
             <swiper class="swiper-box" :current="tabIndex" @change="tabChange">
                 <swiper-item v-for="(item, index) in tabBars" :key="index">
-                    <item-card :tab="index ? 'my' : 'follow'" :refresh="refresh" />
+                    <item-card
+                        :tab="index ? 'my' : 'follow'"
+                        :refresh="refresh"
+                        @browsePicture="browsePicture"
+                    />
                 </swiper-item>
             </swiper>
         </view>
+
+        <uni-popup ref="browsePopup" type="center" opacity="0.9" :maskClick="false">
+            <view class="popup-box">
+                <swiper :current="currentIndex" class="swiper">
+                    <swiper-item
+                        @click="hideBrowse"
+                        v-for="(item, index) in pictures"
+                        :key="index"
+                        class="swiper-item"
+                    >
+                        <image :src="item" mode="widthFix" style="width: 100%;" />
+                    </swiper-item>
+                </swiper>
+            </view>
+        </uni-popup>
     </view>
 </template>
 
 <script>
     import SwiperTabHead from "@/components/topTab";
     import itemCard from "@/components/item-card";
+    import uniPopup from "@/components/uni-popup";
     export default {
         components: {
             SwiperTabHead,
-            itemCard
+            itemCard,
+            uniPopup
         },
         data() {
             return {
@@ -43,7 +64,9 @@
                 tabBars: ["已关注", "我的动态"],
                 followContent: [],
                 myContent: [],
-                refresh: true
+                refresh: true,
+                pictures: [],
+                currentIndex: 0
             };
         },
         onShow() {
@@ -66,18 +89,23 @@
             });
         },
         methods: {
+            browsePicture(items) {
+                this.pictures = items.pictures;
+                this.currentIndex = items.pitureIndex;
+                this.$refs.browsePopup.open();
+                uni.hideTabBar();
+            },
+            hideBrowse() {
+                this.pictures = Array();
+                this.$refs.browsePopup.close();
+                uni.showTabBar();
+            },
             tabtap(index) {
                 this.tabIndex = index;
             },
 
             tabChange(e) {
                 this.tabIndex = e.detail.current;
-                //切换选项卡更换数据。
-                // if (e.detail.current) {
-                //     this.content = [];
-                // } else {
-                //     this.content = [];
-                // }
             }
         }
     };
@@ -111,5 +139,21 @@
 
     .swiper-box {
         height: 100%;
+    }
+
+    .popup-box {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .swiper {
+        width: 100%;
+        height: 100%;
+    }
+
+    .swiper-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>

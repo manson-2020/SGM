@@ -17,7 +17,7 @@
             </view>
         </scroll-view>
         <view class="blank" />
-        <view class="comment-frame bg-fff">
+        <view class="comment-frame bg-fff" :style="'bottom: ' + keyboardheaght + 'px'">
             <input
                 @input="inputState"
                 :value="inputValue.comment"
@@ -25,6 +25,12 @@
                 class="comment-input f1 fs25"
                 placeholder-class="color-999"
                 placeholder="喜欢就评论告诉TA"
+                confirm-type="send"
+                focus
+                @confirm="send"
+                @focus="keyboard"
+                @blur="keyboard"
+                :adjust-position="false"
             />
             <view @click="send" class="color-999 fs26 send-btn">发送</view>
         </view>
@@ -37,7 +43,8 @@
             return {
                 avatar: getApp().globalData.avatar,
                 inputValue: { comment: "" },
-                comments: []
+                comments: [],
+                keyboardheaght: 0
             };
         },
         methods: {
@@ -52,9 +59,12 @@
                     },
                     success: res => {
                         this.inputValue.comment = "";
-                        this.comments = [...this.comments, res.data.result];
+                        this.comments = [res.data.result, ...this.comments];
                     }
                 });
+            },
+            keyboard(e) {
+                this.keyboardheaght = e.type == "focus" ? e.detail.height : 0;
             }
         },
         onLoad(options) {
@@ -101,7 +111,6 @@
         position: fixed;
         width: 100vw;
         height: 115rpx;
-        bottom: 0;
         flex-direction: row;
         align-items: center;
         justify-content: space-around;
