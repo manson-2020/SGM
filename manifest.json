@@ -96,6 +96,12 @@
     "h5" : {
         "router" : {
             "mode" : "history"
+        },
+        "title" : "校团微",
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
         }
     }
 }

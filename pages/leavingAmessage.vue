@@ -102,8 +102,14 @@
                         data: { is_my: index + 1 },
                         complete: res => {
                             uni.hideLoading();
-                            res.data.code == 200 &&
-                                (this["messageList" + index] = res.data.result);
+                            if (res.data.code == 200) {
+                                this["messageList" + index] = res.data.result;
+                            } else {
+                                uni.showToast({
+                                    title: res.data.msg,
+                                    icon: "none"
+                                });
+                            }
                         }
                     });
                 });

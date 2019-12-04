@@ -25,7 +25,7 @@
                 @input="inputState"
                 data-type="content"
                 class="fs26 mt28 idea-textarea"
-                placeholder="写下此刻的想法(限字500)..."
+                placeholder="写下此刻的想法(限字50)..."
                 placeholder-class="color-aaa"
                 maxlength="500"
             />

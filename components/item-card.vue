@@ -197,14 +197,18 @@
                 uni.apiRequest("/api/Dynamic/lists", {
                     data,
                     success: res => {
-                        this.content = res.data.result;
-                        if (
-                            res.data.result.params.all_page <=
-                            res.data.result.params.page
-                        ) {
-                            this.loadingText = "没有更多了~";
+                        if (res.data.code == 200) {
+                            this.content = res.data.result;
+                            if (
+                                res.data.result.params.all_page <=
+                                res.data.result.params.page
+                            ) {
+                                this.loadingText = "没有更多了~";
+                            } else {
+                                this.loadingText = "加载更多...";
+                            }
                         } else {
-                            this.loadingText = "加载更多...";
+                            uni.showToast({ title: res.data.msg, icon: "none" });
                         }
                     }
                 });

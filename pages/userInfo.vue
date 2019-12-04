@@ -3,7 +3,6 @@
         <uni-nav-bar
             :shadow="false"
             :border="false"
-            backgroundColor="#f9f9f9"
             left-icon="back"
             :fixed="true"
             :statusBar="true"
@@ -20,7 +19,6 @@
         </uni-nav-bar>
         <scroll-view scroll-y class="scroll-view f1">
             <image class="avatar-fill bg-2b9f60" :src="avatar || userInfo.logo" mode="aspectFill" />
-
             <view class="header mt70">
                 <image
                     @click="changeAvatar"
@@ -55,7 +53,7 @@
                         <text class="mr50">管理员账号：{{ userInfo.admin_mobile }}</text>
                     </view>
                     <view class="option-item">
-                        <text class="mr50">学校全名称：{{ userInfo.school_name }}</text>
+                        <text class="mr50">学校名称：{{ userInfo.school_name }}</text>
                         <text class="mr50">类别：{{ userInfo.type }}</text>
                     </view>
                     <view class="option-item">
@@ -65,7 +63,7 @@
 
                 <view v-else class="options fs26 color-666">
                     <view class="option-item">
-                        <text class="color-333 fs40 mr50">
+                        <text class="color-333 fs40 mr50 fw-bold">
                             <!-- 昵称： -->
                             {{ userInfo.nickname && (userInfo.nickname.length > 9 ? (userInfo.nickname.substr(0, 9) + '…') : userInfo.nickname) }}
                         </text>
@@ -73,18 +71,18 @@
                             <!-- 性别： -->
                             {{ userInfo.sex }}
                         </text>
-                        <text class="mr50">
+                        <text>
                             <!-- 年龄： -->
                             {{ userInfo.age }}岁
                         </text>
                     </view>
                     <view class="option-item">
                         <text v-if="userInfo.member_name" class="mr50">姓名：{{ userInfo.member_name }}</text>
-                        <text class="mr50">学校全名称：{{ userInfo.school_name }}</text>
+                        <text class="f1 ellipsis">学校名称：{{ userInfo.school_name }}</text>
                     </view>
                     <view class="option-item">
-                        <text class="mr50 f1">QQ：{{ userInfo.qq }}</text>
-                        <text class="mr50 f1">邮箱：{{ userInfo.email }}</text>
+                        <text class="mr50">QQ：{{ userInfo.qq }}</text>
+                        <text class="f1 ellipsis">邮箱：{{ userInfo.email }}</text>
                     </view>
                 </view>
 
@@ -108,7 +106,6 @@
                         <text class="ml18 f1 mr18 lh-30">{{ userInfo.hobby }}</text>
                     </view>
                 </view>
-
                 <view v-if="isOrganization" class="mlr40 mt110 fs32 color-33">
                     <navigator
                         url="/pages/editPhotoWall"
@@ -120,8 +117,11 @@
                     >查看学生组织成员</navigator>
                 </view>
 
-                <view v-else class="options mt30 text-center">
-                    <view class="option-title color333 fs30 mb18">已申请学生组织</view>
+                <view
+                    v-else-if="!isOrganization && organizations.length"
+                    class="options mt30 text-center"
+                >
+                    <view class="option-title color333 fs30 mb18">已加入学生组织</view>
                     <view class="option-item fs26 color-666">
                         <text class="column">学生组织名称</text>
                         <text class="column">学校名称</text>
@@ -137,6 +137,7 @@
                         <text class="column">{{ item.create_time }}</text>
                     </view>
                 </view>
+                <view v-else class="options mt30 text-center text-center color-aaa fs28">你还没有加入过学生组织</view>
             </view>
         </scroll-view>
 
@@ -428,9 +429,6 @@
         flex-direction: row;
         align-items: baseline;
         margin: 15rpx 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 
     .column {

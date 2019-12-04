@@ -188,7 +188,7 @@
                             {
                                 text: "学校",
                                 type: "text",
-                                maxlength: 16,
+                                maxlength: 20,
                                 dataType: "school_name",
                                 placeholder: "请输入学校名称",
                                 disabled: true

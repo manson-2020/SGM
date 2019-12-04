@@ -10,7 +10,7 @@
                     confirm-type="search"
                     @confirm="search"
                     class="search-input fs33"
-                    autofocus
+                    focus
                     placeholder="搜索"
                 />
             </label>
@@ -20,18 +20,34 @@
         <view class="main">
             <swiper class="swiper-box">
                 <swiper-item>
-                    <item-card tab="search" :params="params" />
+                    <item-card tab="search" :params="params" @browsePicture="browsePicture" />
                 </swiper-item>
             </swiper>
         </view>
+
+        <uni-popup ref="browsePopup" type="center" opacity="0.9" :maskClick="false">
+            <view class="popup-box">
+                <swiper :current="currentIndex" class="swiper">
+                    <swiper-item
+                        @click="hideBrowse"
+                        v-for="(item, index) in pictures"
+                        :key="index"
+                        class="swiper-item"
+                    >
+                        <image :src="item" mode="widthFix" style="width: 100%;" />
+                    </swiper-item>
+                </swiper>
+            </view>
+        </uni-popup>
     </view>
 </template>
 
 <script>
     import itemCard from "@/components/item-card";
+    import uniPopup from "@/components/uni-popup";
 
     export default {
-        components: { itemCard },
+        components: { itemCard, uniPopup },
         data() {
             return {
                 inputValue: {
@@ -40,7 +56,9 @@
                 params: {
                     keyWords: "",
                     confirm: false
-                }
+                },
+                pictures: [],
+                currentIndex: 0
             };
         },
         methods: {
@@ -52,6 +70,17 @@
                     keyWords: this.inputValue.keyWords,
                     confirm: true
                 };
+            },
+            browsePicture(items) {
+                this.pictures = items.pictures;
+                this.currentIndex = items.pitureIndex;
+                this.$refs.browsePopup.open();
+                uni.hideTabBar();
+            },
+            hideBrowse() {
+                this.pictures = Array();
+                this.$refs.browsePopup.close();
+                uni.showTabBar();
             }
         }
     };
@@ -70,7 +99,6 @@
         padding: 0 40rpx;
         align-items: center;
         height: 70rpx;
-        z-index: 999;
     }
 
     .input-box {
@@ -103,5 +131,21 @@
 
     .submit-cancle {
         padding: 10rpx;
+    }
+
+    .popup-box {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .swiper {
+        width: 100%;
+        height: 100%;
+    }
+
+    .swiper-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>

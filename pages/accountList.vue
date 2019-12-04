@@ -11,7 +11,7 @@
                     </view>
                     <view class="second-column">
                         <view
-                            class="text fs26 color-9a"
+                            class="text fs26 color-9a f1"
                         >学校：{{ item.school_address || item.school_name || "未知" }}</view>
                         <view
                             @click="operation(index)"

@@ -27,8 +27,8 @@
 
 <style>
     /* * {
-        touch-action: none;
-    } */
+            touch-action: none;
+        } */
 
     uni-radio .uni-radio-input.uni-radio-input-checked:before {
         font-size: 16rpx;
@@ -95,6 +95,12 @@
         background-color: #333;
         opacity: 0.28;
         transition: opacity 0.3s;
+    }
+
+    .ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .f1 {
@@ -346,6 +352,10 @@
 
     .mt290 {
         margin-top: 290rpx;
+    }
+
+    .fw-bold {
+        font-weight: bold;
     }
 
     .fs12 {

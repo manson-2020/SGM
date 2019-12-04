@@ -11,6 +11,7 @@
                     v-for="(item, index) in options"
                     :key="index"
                     :class="'options-item fs32 ' + (index && 'bt-d8')"
+                    hover-class="none"
                     :url="item.url"
                 >
                     <text>{{ item.text }}</text>
@@ -71,7 +72,11 @@
                     type: this.accountInfo.type
                 },
                 success: res => {
-                    this.userInfo = res.data.result;
+                    if (res.data.code == 200) {
+                        this.userInfo = res.data.result;
+                    } else {
+                        uni.showToast({ title: res.data.msg, icon: "none" });
+                    }
                 }
             });
         },
