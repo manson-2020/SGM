@@ -52,16 +52,19 @@
                 this.inputValue[e.currentTarget.dataset.type] = e.detail.value;
             },
             send() {
-                uni.apiRequest("/api/Dynamic/comment", {
-                    data: {
-                        dynamic_id: this.dynamicId,
-                        comment: this.inputValue.comment
-                    },
-                    success: res => {
-                        this.inputValue.comment = "";
-                        this.comments = [res.data.result, ...this.comments];
-                    }
-                });
+                if (this.inputValue.comment) {
+                    uni.apiRequest("/api/Dynamic/comment", {
+                        data: {
+                            dynamic_id: this.dynamicId,
+                            comment: this.inputValue.comment
+                        },
+                        success: res => {
+                            this.inputValue.comment = "";
+                            this.comments = [res.data.result, ...this.comments];
+                        }
+                    });
+                }
+                return false;
             },
             keyboard(e) {
                 this.keyboardheaght = e.type == "focus" ? e.detail.height : 0;

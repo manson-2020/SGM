@@ -135,12 +135,7 @@
                 </view>
             </view>
             <view class="main mt35">
-                <item-card
-                    :refresh="refresh"
-                    :organizationId="userId"
-                    tab="organization"
-                    @browsePicture="browsePicture"
-                />
+                <item-card :refresh="refresh" :organizationId="userId" tab="organization" />
             </view>
         </scroll-view>
 
@@ -196,21 +191,6 @@
                 </view>
             </view>
         </uni-popup>
-
-        <uni-popup ref="browsePopup" type="center" opacity="0.9" :maskClick="false">
-            <view class="popup-box browse">
-                <swiper :current="currentIndex" class="swiper">
-                    <swiper-item
-                        @click="hideBrowse"
-                        v-for="(item, index) in pictures"
-                        :key="index"
-                        class="swiper-item"
-                    >
-                        <image :src="item" mode="widthFix" style="width: 100%;" />
-                    </swiper-item>
-                </swiper>
-            </view>
-        </uni-popup>
     </view>
 </template>
 
@@ -237,9 +217,7 @@
                 applyFlag: false,
                 userId: "",
                 userType: "",
-                refresh: true,
-                pictures: [],
-                currentIndex: 0
+                refresh: true
             };
         },
         onShow() {
@@ -333,17 +311,6 @@
                         });
                         break;
                 }
-            },
-            browsePicture(items) {
-                this.pictures = items.pictures;
-                this.currentIndex = items.pitureIndex;
-                this.$refs.browsePopup.open();
-                uni.hideTabBar();
-            },
-            hideBrowse() {
-                this.pictures = Array();
-                this.$refs.browsePopup.close();
-                uni.showTabBar();
             }
         }
     };
@@ -494,21 +461,5 @@
     .cancel-btn,
     .submit-btn {
         padding: 30rpx 0;
-    }
-
-    .popup-box.browse {
-        width: 100vw;
-        height: 100vh;
-    }
-
-    .swiper {
-        width: 100%;
-        height: 100%;
-    }
-
-    .swiper-item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 </style>

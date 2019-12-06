@@ -56,7 +56,6 @@
                         :tab="index ? 'hot' : 'new'"
                         :dynamicId="dynamicId"
                         :refresh="refresh"
-                        @browsePicture="browsePicture"
                     />
                 </swiper-item>
             </swiper>
@@ -67,21 +66,6 @@
             @click="hide"
             class="shelter full-screen"
         />
-
-        <uni-popup ref="browsePopup" type="center" opacity="0.9" :maskClick="false">
-            <view class="popup-box">
-                <swiper :current="currentIndex" class="swiper">
-                    <swiper-item
-                        @click="hideBrowse"
-                        v-for="(item, index) in pictures"
-                        :key="index"
-                        class="swiper-item"
-                    >
-                        <image :src="item" mode="widthFix" style="width: 100%;" />
-                    </swiper-item>
-                </swiper>
-            </view>
-        </uni-popup>
     </view>
 </template>
 
@@ -89,13 +73,11 @@
     import swiperTabHead from "@/components/topTab";
     import bwSwiper from "@/components/bw-swiper";
     import itemCard from "@/components/item-card";
-    import uniPopup from "@/components/uni-popup";
     export default {
         components: {
             swiperTabHead,
             bwSwiper,
-            itemCard,
-            uniPopup
+            itemCard
         },
         data() {
             return {
@@ -107,9 +89,7 @@
                 types: [],
                 dynamicId: null,
                 dynamicName: "全部类型",
-                refresh: true,
-                pictures: [],
-                currentIndex: 0
+                refresh: true
             };
         },
         onShow() {
@@ -161,17 +141,6 @@
                 this.dynamicName = this.types[index].type;
                 this.hide();
             },
-            browsePicture(items) {
-                this.pictures = items.pictures;
-                this.currentIndex = items.pitureIndex;
-                this.$refs.browsePopup.open();
-                uni.hideTabBar();
-            },
-            hideBrowse() {
-                this.pictures = Array();
-                this.$refs.browsePopup.close();
-                uni.showTabBar();
-            }
         }
     };
 </script>
@@ -262,21 +231,5 @@
     .tabBar {
         margin-top: 50rpx;
         margin-left: 38rpx;
-    }
-
-    .popup-box {
-        width: 100vw;
-        height: 100vh;
-    }
-
-    .swiper {
-        width: 100%;
-        height: 100%;
-    }
-
-    .swiper-item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 </style>

@@ -20,4 +20,7 @@
 </script>
 
 <style>
+    .article {
+        white-space: pre-wrap;
+    }
 </style>

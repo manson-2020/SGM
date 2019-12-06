@@ -50,7 +50,7 @@
                 <image
                     v-for="(pitureItem, pitureIndex) in item.file"
                     :key="pitureIndex"
-                    @click="browsePicture(index, pitureIndex)"
+                    @click="previewImage(index, pitureIndex)"
                     :src="pitureItem"
                     :class="'mb11 ' + (((pitureIndex + 1) % 3 != 0) && 'mr11')"
                     mode="aspectFill"
@@ -210,7 +210,8 @@
                         } else {
                             uni.showToast({ title: res.data.msg, icon: "none" });
                         }
-                    }
+                    },
+                    fail: res => uni.showToast({ title: "网络故障，请重试！", icon: "none" })
                 });
             },
             comment(index) {
@@ -306,10 +307,10 @@
                 uni.navigateTo({ url: `/pages/playVideo?src=${src}` });
             },
 
-            browsePicture(index, pitureIndex) {
-                this.$emit("browsePicture", {
-                    pictures: this.content.data[index].file,
-                    pitureIndex
+            previewImage(index, pitureIndex) {
+                uni.previewImage({
+                    urls: this.content.data[index].file,
+                    current: pitureIndex,
                 });
             },
             loadMore() {
@@ -380,11 +381,6 @@
 </script>
 
 <style>
-    .popup-box .btn-box {
-        border-top: 1rpx solid rgba(235, 235, 235, 0.5);
-        flex-direction: row;
-    }
-
     .cancel-btn,
     .submit-btn {
         padding: 30rpx 0;
@@ -422,8 +418,9 @@
         border: 1px solid #999;
     }
 
-    .school-name {
-        margin-top: 6rpx;
+    .item-name {
+        height: 75rpx;
+        justify-content: space-around;
     }
 
     .item-title {
@@ -515,11 +512,5 @@
 
     .article-title {
         font-weight: bold;
-    }
-
-    .popup-box {
-        width: 100vw;
-        height: 100vh;
-        z-index: 9999;
     }
 </style>

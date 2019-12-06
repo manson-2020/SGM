@@ -1,23 +1,21 @@
 <template>
     <view class="uni-tab-bar" :style="'height:' + (showLine ? 70 : 50) + 'rpx'">
-        <scroll-view class="uni-swiper-tab">
-            <view class="tab-warapper">
+        <view class="tab-warapper">
+            <view
+                class="swiper-tab-list"
+                :class="{'active' : tabIndex == index}"
+                @click="tabtap(index)"
+                v-for="(item, index) in tabBars"
+                :key="index"
+            >
+                <text>{{ item }}</text>
                 <view
-                    class="swiper-tab-list"
-                    :class="{'active' : tabIndex == index}"
-                    @click="tabtap(index)"
-                    v-for="(item, index) in tabBars"
-                    :key="index"
-                >
-                    <text>{{ item }}</text>
-                    <view
-                        v-if="showLine"
-                        :style="'background: ' + lineColor + ';'"
-                        class="swiper-tab-line"
-                    />
-                </view>
+                    v-if="showLine"
+                    :style="'background: ' + lineColor + ';'"
+                    class="swiper-tab-line"
+                />
             </view>
-        </scroll-view>
+        </view>
     </view>
 </template>
 <script>
@@ -56,19 +54,26 @@
         flex-direction: row;
         align-items: baseline;
     }
+
     .swiper-tab-list {
         color: #999;
         font-size: 32rpx;
         margin-right: 77rpx;
         transition: all 0.3s;
     }
+
+    .uni-tab-bar {
+        justify-content: center;
+    }
+
     .uni-tab-bar .active {
         color: #000;
         font-size: 40rpx;
     }
+
     .active .swiper-tab-line {
         width: 100%;
-        margin-top: 16rpx;
+        margin-top: 12rpx;
         height: 4rpx;
         border-radius: 20rpx;
     }

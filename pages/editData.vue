@@ -13,7 +13,7 @@
         >
             <view slot="right" class="save-btn bg-2b9f60 color-fff fs26">保存</view>
         </uni-nav-bar>
-        <scroll-view scroll-y class="f1" style="height: auto;">
+        <scroll-view scroll-y class="info-container f1">
             <view v-if="userOrorganization" class="main mlr40">
                 <view class="frame-item mt20">
                     <label
@@ -39,7 +39,7 @@
                 <view
                     v-for="(item, index) in options.user.secondItems"
                     :key="index"
-                    class="frame-item mt30"
+                    class="frame-item mt30 mb50"
                 >
                     <text class="item-title fs28 color-333">{{ item.text }}</text>
                     <textarea
@@ -76,7 +76,7 @@
                 <view
                     v-for="(item, index) in options.organization.secondItems"
                     :key="index"
-                    class="frame-item mt30"
+                    class="frame-item mt30 mb50"
                 >
                     <text class="item-title fs28 color-333">{{ item.text }}</text>
                     <textarea
@@ -138,7 +138,8 @@
                     nickname: "",
                     age: "",
                     qq: "",
-                    email: ""
+                    email: "",
+                    name: ""
                 },
                 gender: ["男", "女"],
                 userInfo: {},
@@ -225,6 +226,14 @@
                     },
                     organization: {
                         firstItmes: [
+                            {
+                                text: "组织",
+                                type: "text",
+                                maxlength: 16,
+                                dataType: "name",
+                                placeholder: "请输入组织名称",
+                                disabled: true
+                            },
                             {
                                 text: "账号",
                                 type: "number",
@@ -336,6 +345,7 @@
                 } else {
                     uni.apiRequest("/api/user/update_organization", {
                         data: {
+                            name: this.inputValue.name,
                             admin_mobile: this.inputValue.admin_mobile,
                             type_id: this.inputValue.type.id,
                             school_name: this.inputValue.school_name,
@@ -376,6 +386,10 @@
         padding: 8rpx 19rpx;
         border-radius: 18rpx;
         box-sizing: border-box;
+    }
+
+    .info-container {
+        height: 0;
     }
 
     .frame-item {

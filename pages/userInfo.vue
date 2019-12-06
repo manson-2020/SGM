@@ -29,15 +29,27 @@
                 <view class="summary ml22">
                     <text class="fs30 color-fff">{{ userInfo.member_mobile || userInfo.name }}</text>
                     <view class="fs26 color-eee member-container">
-                        <navigator url="/pages/accountList?pageType=follow">关注 {{ userInfo.follow }}</navigator>
+                        <navigator
+                            v-if="accountInfo.id == userId && accountInfo.type == userType"
+                            hover-class="navigator-hover"
+                            :hover-stay-time="200"
+                            url="/pages/accountList?pageType=follow"
+                        >关注 {{ userInfo.follow }}</navigator>
+                        <text v-else>关注 {{ userInfo.follow }}</text>
                         <text style="margin: 0 20rpx;">|</text>
-                        <navigator url="/pages/accountList?pageType=fans">粉丝 {{ userInfo.fans }}</navigator>
+                        <navigator
+                            v-if="accountInfo.id == userId && accountInfo.type == userType"
+                            hover-class="navigator-hover"
+                            :hover-stay-time="200"
+                            url="/pages/accountList?pageType=fans"
+                        >粉丝 {{ userInfo.fans }}</navigator>
+                        <text v-else>粉丝 {{ userInfo.fans }}</text>
                     </view>
                 </view>
                 <view
                     v-if="userId != accountInfo.id ||
                     userType != accountInfo.type"
-                    class="btn-box fs20 text-center"
+                    class="btn-box fs28 text-center"
                 >
                     <view
                         @click="follow"
@@ -53,11 +65,13 @@
                         <text class="mr50">管理员账号：{{ userInfo.admin_mobile }}</text>
                     </view>
                     <view class="option-item">
-                        <text class="mr50">学校名称：{{ userInfo.school_name }}</text>
+                        <text
+                            class="mr50"
+                        >学校名称：{{ userInfo.school_name && (userInfo.school_name.length > 9 ? (userInfo.school_name.substr(0, 9) + '…') : userInfo.school_name) }}</text>
                         <text class="mr50">类别：{{ userInfo.type }}</text>
                     </view>
                     <view class="option-item">
-                        <text class="mr50">学校地址：{{ userInfo.school_address }}</text>
+                        <text class="mr50 ellipsis">学校地址：{{ userInfo.school_address }}</text>
                     </view>
                 </view>
 
@@ -132,9 +146,9 @@
                         :key="item.id"
                         class="option-item fs26 color-666"
                     >
-                        <text class="column">{{ item.name }}</text>
-                        <text class="column">{{ item.school_name }}</text>
-                        <text class="column">{{ item.create_time }}</text>
+                        <text class="column ellipsis">{{ item.name }}</text>
+                        <text class="column ellipsis">{{ item.school_name }}</text>
+                        <text class="column ellipsis">{{ item.create_time }}</text>
                     </view>
                 </view>
                 <view v-else class="options mt30 text-center text-center color-aaa fs28">你还没有加入过学生组织</view>
@@ -355,8 +369,11 @@
                             }
                         }
                     });
+                } else {
+                    uni.previewImage({
+                        urls: [this.userInfo.logo]
+                    });
                 }
-                return false;
             }
         }
     };

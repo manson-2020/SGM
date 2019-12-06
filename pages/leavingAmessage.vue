@@ -8,13 +8,13 @@
                 :tabIndex="tabIndex"
                 @tabtap="tabtap"
             />
-            <view @click="getData" class="refresh fs26 color-fff bg-2b9f60">刷新</view>
+            <view @click="getData" class="refresh fs28 color-fff bg-2b9f60">刷新</view>
         </view>
 
         <view class="main">
             <swiper class="swiper-box" :current="tabIndex" @change="tabChange">
                 <swiper-item v-for="(item, index) in tabBars" :key="index">
-                    <scroll-view class="scroll-view" scroll-y v-if="index == 0">
+                    <scroll-view class="scroll-view" scroll-y v-if="index == 1">
                         <view class="main-wrapper">
                             <view v-for="item in messageList0" :key="item.id" class="main-item">
                                 <view class="userInfo">
@@ -43,7 +43,7 @@
                         </view>
                     </scroll-view>
 
-                    <scroll-view class="scroll-view" scroll-y v-if="index == 1">
+                    <scroll-view class="scroll-view" scroll-y v-if="index == 0">
                         <view class="main-wrapper">
                             <view v-for="item in messageList1" :key="item.id" class="main-item">
                                 <view class="userInfo">

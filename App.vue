@@ -27,8 +27,8 @@
 
 <style>
     /* * {
-            touch-action: none;
-        } */
+                    touch-action: none;
+                } */
 
     uni-radio .uni-radio-input.uni-radio-input-checked:before {
         font-size: 16rpx;
@@ -101,6 +101,15 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+
+    .width-0 {
+        width: 0;
+    }
+
+    .navigator-hover {
+        opacity: 0.6;
+        background: transparent;
     }
 
     .f1 {

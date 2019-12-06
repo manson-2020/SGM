@@ -20,25 +20,10 @@
         <view class="main">
             <swiper class="swiper-box">
                 <swiper-item>
-                    <item-card tab="search" :params="params" @browsePicture="browsePicture" />
+                    <item-card tab="search" :params="params" />
                 </swiper-item>
             </swiper>
         </view>
-
-        <uni-popup ref="browsePopup" type="center" opacity="0.9" :maskClick="false">
-            <view class="popup-box">
-                <swiper :current="currentIndex" class="swiper">
-                    <swiper-item
-                        @click="hideBrowse"
-                        v-for="(item, index) in pictures"
-                        :key="index"
-                        class="swiper-item"
-                    >
-                        <image :src="item" mode="widthFix" style="width: 100%;" />
-                    </swiper-item>
-                </swiper>
-            </view>
-        </uni-popup>
     </view>
 </template>
 
@@ -56,9 +41,7 @@
                 params: {
                     keyWords: "",
                     confirm: false
-                },
-                pictures: [],
-                currentIndex: 0
+                }
             };
         },
         methods: {
@@ -66,21 +49,13 @@
                 this.inputValue[e.currentTarget.dataset.type] = e.detail.value;
             },
             search() {
-                this.params = {
-                    keyWords: this.inputValue.keyWords,
-                    confirm: true
-                };
-            },
-            browsePicture(items) {
-                this.pictures = items.pictures;
-                this.currentIndex = items.pitureIndex;
-                this.$refs.browsePopup.open();
-                uni.hideTabBar();
-            },
-            hideBrowse() {
-                this.pictures = Array();
-                this.$refs.browsePopup.close();
-                uni.showTabBar();
+                if (this.inputValue.keyWords) {
+                    this.params = {
+                        keyWords: this.inputValue.keyWords,
+                        confirm: true
+                    };
+                }
+                return false;
             }
         }
     };
@@ -131,21 +106,5 @@
 
     .submit-cancle {
         padding: 10rpx;
-    }
-
-    .popup-box {
-        width: 100vw;
-        height: 100vh;
-    }
-
-    .swiper {
-        width: 100%;
-        height: 100%;
-    }
-
-    .swiper-item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 </style>

@@ -3,7 +3,7 @@
         <view class="header bg-2b9f60" />
         <view class="main">
             <view class="user-box mt50">
-                <image class="avatar" :src="userInfo.logo || avatar" />
+                <image class="avatar" @click="previewAvatar" :src="userInfo.logo || avatar" />
                 <text class="fs30 color-fff mt22">{{ userInfo.name || userInfo.nickname }}</text>
             </view>
             <view class="options mt25">
@@ -11,8 +11,9 @@
                     v-for="(item, index) in options"
                     :key="index"
                     :class="'options-item fs32 ' + (index && 'bt-d8')"
-                    hover-class="none"
+                    hover-class="navigator-hover"
                     :url="item.url"
+                    :hover-stay-time="200"
                 >
                     <text>{{ item.text }}</text>
                     <image class="icon-next" src="/static/icon-next.png" />
@@ -62,6 +63,11 @@
                     success: res => {
                         uni.redirectTo({ url: "/pages/index" });
                     }
+                });
+            },
+            previewAvatar() {
+                uni.previewImage({
+                    urls: [this.userInfo.logo || this.avatar]
                 });
             }
         },
@@ -143,7 +149,7 @@
     }
 
     .bt-d8 {
-        border-top: 1rpx solid #d8d8d8;
+        border-top: 1rpx solid rgba(216, 216, 216, 0.6);
     }
 
     .icon-next {

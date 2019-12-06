@@ -3,16 +3,23 @@
         <view v-if="!list.length" class="text-center color-aaa fs33 pt50">暂无更多内容</view>
         <view v-else class="bg-fff pt50 pb50">
             <view v-for="(item, index) in list" :key="index" class="list mb50">
-                <image class="avatar" :src="item.url || avatar" />
+                <navigator
+                    class="avatar"
+                    :url="'/pages/userInfo?type=' + (item.type || 2) + '&userId=' + (item.member_id || item.id)"
+                >
+                    <image class="avatar" :src="item.url || avatar" />
+                </navigator>
                 <view class="describe f1 ml22">
                     <view class="first-column">
                         <view class="name fs30 color-000">{{ item.nickname }}</view>
                         <view class="tel fs26 color-bf">{{ item.member_mobile }}</view>
                     </view>
                     <view class="second-column">
-                        <view
-                            class="text fs26 color-9a f1"
-                        >学校：{{ item.school_address || item.school_name || "未知" }}</view>
+                        <view class="width-0 fs26 color-9a f1">
+                            <text
+                                class="ellipsis"
+                            >学校：{{ item.school_address || item.school_name || "未知" }}</text>
+                        </view>
                         <view
                             @click="operation(index)"
                             v-if="pageType == 'member'"
@@ -197,8 +204,8 @@
 
     .list {
         flex-direction: row;
-        padding-left: 60rpx;
-        padding-right: 60rpx;
+        margin-left: 60rpx;
+        margin-right: 60rpx;
     }
 
     .describe {
