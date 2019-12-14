@@ -83,11 +83,11 @@
         data() {
             return {
                 radioGroup: [
-                    { text: "视频", isChecked: true },
+                    { text: "视频", isChecked: false },
                     { text: "图片", isChecked: false }
                 ],
                 inputValue: {
-                    type: "视频",
+                    type: "",
                     title: "",
                     content: ""
                 },
@@ -109,8 +109,10 @@
             submitData(data) {
                 uni.apiRequest("/api/Dynamic/add", {
                     data,
-                    success: res => {
+                    complete() {
                         uni.hideLoading();
+                    },
+                    success: res => {
                         uni.showToast({
                             title: res.data.msg,
                             icon: res.data.code == 200 ? "success" : "none",
@@ -123,6 +125,9 @@
                                 }
                             }
                         });
+                    },
+                    fail() {
+                        uni.showToast({ title: "发布动态失败！", icon: "none" });
                     }
                 });
             },
@@ -139,10 +144,9 @@
                             url: uni.requestUrl + "/files/file/upload",
                             filePath: this.video.tempFilePath,
                             name: "file",
-                            complete: uploadFileRes => {
+                            success: uploadFileRes => {
                                 let result = JSON.parse(uploadFileRes.data);
                                 data.video = result.data.id;
-                                uni.hideLoading();
                                 uni.showToast({
                                     title: result.msg,
                                     icon: result.code == 200 ? "success" : "none",
@@ -151,6 +155,12 @@
                                             this.submitData(data);
                                         }
                                     }
+                                });
+                            },
+                            fail() {
+                                uni.showToast({
+                                    title: "视频上传失败， 请重新试一下！",
+                                    icon: "none"
                                 });
                             }
                         });
@@ -190,6 +200,8 @@
                     } else {
                         this.submitData(data);
                     }
+                } else {
+                    this.submitData(data);
                 }
             },
             radio(index) {

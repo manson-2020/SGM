@@ -151,7 +151,7 @@
                         <text class="column ellipsis">{{ item.create_time }}</text>
                     </view>
                 </view>
-                <view v-else class="options mt30 text-center text-center color-aaa fs28">你还没有加入过学生组织</view>
+                <view v-else class="options mt30 text-center text-center color-aaa fs28">{{ (accountInfo.id == userId && accountInfo.type == userType) ? "你" : "TA"}}还没有加入过学生组织</view>
             </view>
         </scroll-view>
 

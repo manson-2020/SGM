@@ -34,7 +34,7 @@
                 class="fs24 color-aaa ml20 mt20"
             >{{item.original_name ? ('转载于' + item.original_name) : '原创文章'}}</view>
 
-            <view v-if="tab == 'organization'" class="article-title fs32 ml22 mr22">{{ item.title }}</view>
+            <view v-if="tab == 'organization'" class="article-title fs32 ml22 mr22 mt10">{{ item.title }}</view>
             <view v-if="item.video" class="preview-video mt22">
                 <view
                     @click="playVideo(item.video)"
@@ -58,7 +58,7 @@
             </view>
 
             <view class="article">
-                <view v-if="tab != 'organization'" class="article-title fs32">{{ item.title }}</view>
+                <view v-if="tab != 'organization'" class="article-title fs32 mt10">{{ item.title }}</view>
                 <view class="article-describe fs30 color-aaa">{{ item.content }}</view>
                 <view class="article-time fs22 text-right color-aaa">{{ item.create_time }}</view>
             </view>
@@ -211,7 +211,11 @@
                             uni.showToast({ title: res.data.msg, icon: "none" });
                         }
                     },
-                    fail: res => uni.showToast({ title: "网络故障，请重试！", icon: "none" })
+                    fail: res =>
+                        uni.showToast({
+                            title: "服务器故障，请重试！",
+                            icon: "none"
+                        })
                 });
             },
             comment(index) {
@@ -237,6 +241,7 @@
                                     icon: res.data.code == 200 ? "success" : "none",
                                     success: _ => {
                                         if (res.data.code == 200) {
+                                            // this.getData();
                                             this.content.data[
                                                 index
                                             ].is_follow = isSelected;
@@ -310,7 +315,7 @@
             previewImage(index, pitureIndex) {
                 uni.previewImage({
                     urls: this.content.data[index].file,
-                    current: pitureIndex,
+                    current: pitureIndex
                 });
             },
             loadMore() {

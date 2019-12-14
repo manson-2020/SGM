@@ -5,7 +5,7 @@
             <view v-for="(item, index) in list" :key="index" class="list mb50">
                 <navigator
                     class="avatar"
-                    :url="'/pages/userInfo?type=' + (item.type || 2) + '&userId=' + (item.member_id || item.id)"
+                    :url="'/pages/' + (item.type == 3 ? 'organizationInfo' : 'userInfo') + '?type=' + (item.type || 2) + '&userId=' + (item.member_id || item.id)"
                 >
                     <image class="avatar" :src="item.url || avatar" />
                 </navigator>

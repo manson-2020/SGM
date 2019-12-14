@@ -8,14 +8,14 @@
                         @input="inputState"
                         data-type="number"
                         class="input fs28 f1 pt10 pb10"
-                        type="number"
-                        placeholder="手机号"
-                        maxlength="11"
+                        placeholder="登录账号"
+                        maxlength="20"
+                        minlength="6"
                         placeholder-style="color: #d4d4d4"
                     />
-                    <view class="split" />
+                    <!-- <view class="split" />
                     <view class="fs28 prefix">+86</view>
-                    <image class="icon-down" src="/static/icon-down.png" />
+                    <image class="icon-down" src="/static/icon-down.png" /> -->
                 </view>
             </view>
 
@@ -93,7 +93,8 @@
                             uni.showToast({
                                 title: res.data.msg,
                                 icon: res.data.code == 200 ? "success" : "none",
-                                duration: 1500,
+                                duration: 1200,
+                                mask: true,
                                 complete: _ => {
                                     setTimeout(_ => {
                                         uni.hideToast();
@@ -108,7 +109,7 @@
                                                 }
                                             });
                                         }
-                                    }, 1500);
+                                    }, 1200);
                                 }
                             });
                         }

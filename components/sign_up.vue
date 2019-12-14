@@ -28,16 +28,12 @@
                         class="input fs28 f1 pb10 pt10"
                         @click="openPopup"
                         :placeholder="item.placeholder"
-                        :maxlength="item.type == 'phone' ? 11 : 30"
-                        :type="(item.type == 'phone' || item.type == 'contact') ? 'number' : (item.type == 'password' || item.type == 'repassword') ? 'password' : 'text'"
+                        :maxlength="item.type == 'phone' ? 20 : 30"
+                        :type="(item.type == 'password' || item.type == 'repassword') ? 'password' : 'text'"
                     />
-                    <view v-if="!index" class="split" />
-                    <view v-if="!index" class="fs25 prefix">+86</view>
-                    <image
-                        v-if="item.type == 'phone' || item.type == 'type'"
-                        class="icon-down"
-                        src="/static/icon-down.png"
-                    />
+                    <!-- <view v-if="!index" class="split" />
+                    <view v-if="!index" class="fs25 prefix">+86</view>-->
+                    <image v-if="item.type == 'type'" class="icon-down" src="/static/icon-down.png" />
                 </view>
             </view>
             <button @click="submit" class="btn">{{ btns[tabIndex] }}</button>
@@ -48,6 +44,7 @@
                 @input="inputState"
                 data-type="introduction"
                 class="textarea fs28"
+                :value="inputValue.introduction"
                 placeholder="学生组织简介（限字200）"
             />
             <view class="avatar_title">
@@ -130,12 +127,12 @@
                     {
                         type: "phone",
                         style: "width: 24rpx; height: 37rpx",
-                        placeholder: "手机号"
+                        placeholder: "登录账号"
                     },
                     {
                         type: "user",
                         style: "width: 27rpx; height: 31rpx",
-                        placeholder: "姓名"
+                        placeholder: "昵称"
                     },
                     {
                         type: "school",
@@ -167,7 +164,7 @@
                     {
                         type: "phone",
                         style: "width: 24rpx; height: 37rpx",
-                        placeholder: "管理员手机号"
+                        placeholder: "管理员帐号"
                     },
                     {
                         type: "organize",
@@ -244,15 +241,25 @@
                 switch (this.tabIndex) {
                     case 0:
                         if (
+                            !this.inputValue.password ||
                             !this.inputValue.repassword ||
                             !this.inputValue.phone ||
-                            !this.inputValue.user ||
-                            !this.inputValue.school ||
-                            !this.inputValue.email ||
-                            !this.inputValue.contact
+                            !this.inputValue.user
+                            // !this.inputValue.school ||
+                            // !this.inputValue.email ||
+                            // !this.inputValue.contact
                         ) {
                             uni.showToast({
                                 title: "请检查输入信息是否完整！",
+                                icon: "none"
+                            });
+                        } else if (
+                            !this.inputValue.phone.match(/^[A-Za-z0-9]+$/i) ||
+                            this.inputValue.phone.match(/^[A-Za-z]+$/i) ||
+                            this.inputValue.phone.match(/^[0-9]+$/i)
+                        ) {
+                            uni.showToast({
+                                title: "账号必须是字母加数字的6-20位组合！",
                                 icon: "none"
                             });
                         } else if (
@@ -276,6 +283,8 @@
                                     uni.showToast({
                                         title: res.data.msg,
                                         icon: "none",
+                                        mask: true,
+                                        duration: 1200,
                                         success() {
                                             if (res.data.code == 200) {
                                                 uni.setStorageSync(
@@ -286,7 +295,7 @@
                                                     uni.switchTab({
                                                         url: "/pages/home"
                                                     });
-                                                }, 2000);
+                                                }, 1200);
                                             }
                                         }
                                     });
@@ -298,55 +307,94 @@
                         this.tabIndex = 2;
                         break;
                     case 2:
-                        uni.showLoading({ title: "注册中..." });
-                        uni.uploadFile({
-                            url: uni.requestUrl + "/files/image/upload",
-                            filePath: this.avatar.url,
-                            name: "image",
-                            complete: uploadFileRes => {
-                                let avatarResult = JSON.parse(uploadFileRes.data);
-                                if (avatarResult.code == 200) {
-                                    this.avatar.id = avatarResult.data.id;
-                                    let times = Number();
-                                    this.photoWalls.map((item, index) => {
-                                        uni.uploadFile({
-                                            url:
-                                                uni.requestUrl +
-                                                "/files/image/upload",
-                                            filePath: item.url,
-                                            name: "image",
-                                            complete: uploadFileRes => {
-                                                let photoWallResult = JSON.parse(
-                                                    uploadFileRes.data
-                                                );
-                                                if (photoWallResult.code == 200) {
-                                                    times++;
-                                                    this.photoWalls[
-                                                        index
-                                                    ].id = JSON.parse(
+                        if (
+                            !this.inputValue.phone ||
+                            !this.inputValue.organize ||
+                            !this.inputValue.school ||
+                            !this.inputValue.position ||
+                            !this.inputValue.typeid ||
+                            !this.inputValue.introduction ||
+                            !this.inputValue.password ||
+                            !this.inputValue.repassword ||
+                            this.avatar.url == "/static/img-default.png" ||
+                            !this.photoWalls.length
+                        ) {
+                            uni.showToast({
+                                title: "请检查输入信息是否完整！",
+                                icon: "none"
+                            });
+                        } else if (
+                            !this.inputValue.phone.match(/^[A-Za-z0-9]+$/i) ||
+                            this.inputValue.phone.match(/^[A-Za-z]+$/i) ||
+                            this.inputValue.phone.match(/^[0-9]+$/i)
+                        ) {
+                            uni.showToast({
+                                title: "账号必须是字母加数字的6-20位组合！",
+                                icon: "none"
+                            });
+                        } else if (
+                            this.inputValue.password != this.inputValue.repassword
+                        ) {
+                            uni.showToast({
+                                title: "两次输入密码不匹配！",
+                                icon: "none"
+                            });
+                        } else {
+                            uni.showLoading({ title: "注册中..." });
+                            uni.uploadFile({
+                                url: uni.requestUrl + "/files/image/upload",
+                                filePath: this.avatar.url,
+                                name: "image",
+                                complete: uploadFileRes => {
+                                    let avatarResult = JSON.parse(
+                                        uploadFileRes.data
+                                    );
+                                    if (avatarResult.code == 200) {
+                                        this.avatar.id = avatarResult.data.id;
+                                        let times = Number();
+                                        this.photoWalls.map((item, index) => {
+                                            uni.uploadFile({
+                                                url:
+                                                    uni.requestUrl +
+                                                    "/files/image/upload",
+                                                filePath: item.url,
+                                                name: "image",
+                                                complete: uploadFileRes => {
+                                                    let photoWallResult = JSON.parse(
                                                         uploadFileRes.data
-                                                    ).data.id;
+                                                    );
                                                     if (
-                                                        this.photoWalls.length ==
-                                                        times
+                                                        photoWallResult.code == 200
                                                     ) {
-                                                        this.submitData();
+                                                        times++;
+                                                        this.photoWalls[
+                                                            index
+                                                        ].id = JSON.parse(
+                                                            uploadFileRes.data
+                                                        ).data.id;
+                                                        if (
+                                                            this.photoWalls
+                                                                .length == times
+                                                        ) {
+                                                            this.submitData();
+                                                        }
+                                                    } else {
+                                                        uni.hideLoading();
+                                                        uni.showToast({
+                                                            title: `照片墙图${index +
+                                                                1}：${result.msg}`,
+                                                            icon: "none"
+                                                        });
                                                     }
-                                                } else {
-                                                    uni.hideLoading();
-                                                    uni.showToast({
-                                                        title: `照片墙图${index +
-                                                            1}：${result.msg}`,
-                                                        icon: "none"
-                                                    });
                                                 }
-                                            }
+                                            });
                                         });
-                                    });
-                                } else {
+                                    } else {
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
+
                         break;
                 }
             },
@@ -368,7 +416,8 @@
                         uni.hideLoading();
                         uni.showToast({
                             title: res.data.msg,
-                            icon: "none",
+                            icon: res.data.code == 200 ? "success" : "none",
+                            duration: 1200,
                             success() {
                                 if (res.data.code == 200) {
                                     uni.setStorageSync(
@@ -379,7 +428,7 @@
                                         uni.switchTab({
                                             url: "/pages/home"
                                         });
-                                    }, 2000);
+                                    }, 1200);
                                 }
                             }
                         });
@@ -397,6 +446,7 @@
                     success: chooseImageRes => {
                         if (type == "avatar") {
                             this.avatar.url = chooseImageRes.tempFilePaths[0];
+                            console.log(this.avatar);
                         } else {
                             chooseImageRes.tempFilePaths.map(item => {
                                 this.photoWalls.push({ url: item });
