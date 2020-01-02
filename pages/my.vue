@@ -3,7 +3,7 @@
         <view class="header bg-2b9f60" />
         <view class="main">
             <view class="user-box mt50">
-                <image class="avatar" @click="previewAvatar" :src="userInfo.logo || avatar" />
+                <image class="avatar" mode="aspectFill" @click="previewAvatar" :src="userInfo.logo || avatar" />
                 <text class="fs30 color-fff mt22">{{ userInfo.name || userInfo.nickname }}</text>
             </view>
             <view class="options mt25">
@@ -61,7 +61,7 @@
                 uni.removeStorage({
                     key: "accountInfo",
                     success: res => {
-                        uni.redirectTo({ url: "/pages/index" });
+                        uni.reLaunch({ url: "/pages/index" });
                     }
                 });
             },

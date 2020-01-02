@@ -15,11 +15,11 @@
                     />
                     <!-- <view class="split" />
                     <view class="fs28 prefix">+86</view>
-                    <image class="icon-down" src="/static/icon-down.png" /> -->
+                    <image class="icon-down" src="/static/icon-down.png" />-->
                 </view>
             </view>
 
-            <view class="uni-padding-wrap fs28">
+            <view class="uni-padding-wrap fs28 color-aaa">
                 <radio-group @change="inputState" data-type="type" class="radio-group">
                     <label v-for="item in radioGroup" :key="item.id">
                         <radio :value="item.id" color="#2b9f60" :checked="item.isChecked" />
@@ -37,9 +37,14 @@
                         class="input fs28 f1 pt10 pb10"
                         type="password"
                         placeholder="登录密码"
-                        placeholder-style="color: #d4d4d4"
+                        placeholder-style="color: #d4d4d4;"
                     />
                 </view>
+            </view>
+            <view class="tips fs26 color-aaa">
+                <text>如遇问题或有任何意见请加Q群</text>
+                <text class="color-2b9f60" @click="copyToClipboard(qqGroupNumber)">{{ qqGroupNumber }}</text>
+                <text>详诉</text>
             </view>
             <button @click="signIn" class="btn primery fs32 mt50">登 录</button>
             <button @click="signUp" class="btn mt35 fs32">去 注 册</button>
@@ -51,6 +56,7 @@
     export default {
         data() {
             return {
+                qqGroupNumber: "984798730",
                 inputValue: {
                     number: 0,
                     password: "",
@@ -115,16 +121,32 @@
                         }
                     });
                 }
+            },
+            copyToClipboard(data) {
+                uni.setClipboardData({
+                    data,
+                    success: _ =>
+                        uni.showToast({ title: "已复制到剪贴板", icon: "none" })
+                });
             }
         }
     };
 </script>
 
 <style>
-    .option-item {
+    .option-item,
+    .tips {
         flex-direction: row;
-        align-items: center;
         margin: 60rpx 50rpx 0;
+    }
+
+    .option-item {
+        align-items: center;
+    }
+
+    .tips {
+        align-items: baseline;
+        justify-content: center;
     }
 
     .input-box {
@@ -173,7 +195,6 @@
 
     .uni-padding-wrap {
         flex-direction: row;
-        color: #d4d4d4;
         margin: 43rpx 25rpx 0;
         justify-content: space-around;
     }

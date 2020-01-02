@@ -34,7 +34,10 @@
                 class="fs24 color-aaa ml20 mt20"
             >{{item.original_name ? ('转载于' + item.original_name) : '原创文章'}}</view>
 
-            <view v-if="tab == 'organization'" class="article-title fs32 ml22 mr22 mt10">{{ item.title }}</view>
+            <view
+                v-if="tab == 'organization'"
+                class="article-title fs32 ml22 mr22 mt10"
+            >{{ item.title }}</view>
             <view v-if="item.video" class="preview-video mt22">
                 <view
                     @click="playVideo(item.video)"
@@ -199,6 +202,8 @@
                     success: res => {
                         if (res.data.code == 200) {
                             this.content = res.data.result;
+                            uni.hideNavigationBarLoading(); //完成停止加载
+                            uni.stopPullDownRefresh(); //停止下拉刷新
                             if (
                                 res.data.result.params.all_page <=
                                 res.data.result.params.page

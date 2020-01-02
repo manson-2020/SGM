@@ -55,9 +55,9 @@
                             class="btn bg-fff color-2b9f60 fs28 border-2b9f60"
                         >不同意</view>
                     </view>
-                    <!-- <view v-if="pageType != 'fans'" class="last-column">
+                    <view v-if="pageType == 'examine'" class="last-column">
                         <view class="text fs25 color-9a">答案: {{ item.answer }}</view>
-                    </view>-->
+                    </view>
                 </view>
             </view>
         </view>
@@ -146,6 +146,8 @@
                         uni.apiRequest("/api/User/homeList", {
                             success: res => {
                                 this.list = res.data.result;
+                                uni.hideNavigationBarLoading(); //完成停止加载
+                                uni.stopPullDownRefresh(); //停止下拉刷新
                             }
                         });
                         uni.setNavigationBarTitle({ title: "申请审核" });
@@ -157,6 +159,8 @@
                             },
                             success: res => {
                                 this.list = res.data.result;
+                                uni.hideNavigationBarLoading(); //完成停止加载
+                                uni.stopPullDownRefresh(); //停止下拉刷新
                             }
                         });
                         uni.setNavigationBarTitle({ title: "粉丝" });
@@ -169,6 +173,8 @@
                             },
                             success: res => {
                                 this.list = res.data.result.data;
+                                uni.hideNavigationBarLoading(); //完成停止加载
+                                uni.stopPullDownRefresh(); //停止下拉刷新
                             }
                         });
                         uni.setNavigationBarTitle({ title: "组织成员" });
@@ -180,6 +186,8 @@
                             },
                             success: res => {
                                 this.list = res.data.result;
+                                uni.hideNavigationBarLoading(); //完成停止加载
+                                uni.stopPullDownRefresh(); //停止下拉刷新
                             }
                         });
                         uni.setNavigationBarTitle({ title: "关注的人" });
@@ -190,6 +198,10 @@
 
         onLoad(options) {
             this.pageType = options.pageType;
+            this.pageData();
+        },
+
+        onPullDownRefresh() {
             this.pageData();
         }
     };

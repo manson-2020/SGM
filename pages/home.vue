@@ -109,6 +109,10 @@
                 success: res => (this.swiperList = res.data.result)
             });
         },
+
+        onPullDownRefresh() {
+            this.refresh = !this.refresh;
+        },
         methods: {
             tabtap(index) {
                 this.tabIndex = index;
@@ -140,7 +144,7 @@
                 this.dynamicId = this.types[index].id;
                 this.dynamicName = this.types[index].type;
                 this.hide();
-            },
+            }
         }
     };
 </script>

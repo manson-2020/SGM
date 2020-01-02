@@ -148,21 +148,6 @@
                     user: {
                         firstItmes: [
                             {
-                                text: "账号",
-                                type: "number",
-                                maxlength: 11,
-                                dataType: "member_mobile",
-                                placeholder: "请输入电话号码",
-                                disabled: true
-                            },
-                            {
-                                text: "性别",
-                                type: "image",
-                                dataType: "sex",
-                                className: "icon-down",
-                                src: "/static/icon-down.png"
-                            },
-                            {
                                 text: "昵称",
                                 type: "text",
                                 maxlength: 16,
@@ -177,6 +162,13 @@
                                 dataType: "member_name",
                                 placeholder: "请输入姓名",
                                 disabled: true
+                            },
+                            {
+                                text: "性别",
+                                type: "image",
+                                dataType: "sex",
+                                className: "icon-down",
+                                src: "/static/icon-down.png"
                             },
                             {
                                 text: "年龄",
@@ -232,14 +224,6 @@
                                 maxlength: 16,
                                 dataType: "name",
                                 placeholder: "请输入组织名称",
-                                disabled: true
-                            },
-                            {
-                                text: "账号",
-                                type: "number",
-                                maxlength: 11,
-                                dataType: "admin_mobile",
-                                placeholder: "请输入手机号码",
                                 disabled: true
                             },
                             {

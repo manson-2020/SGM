@@ -65,9 +65,7 @@
                         <text class="mr50">管理员账号：{{ userInfo.admin_mobile }}</text>
                     </view>
                     <view class="option-item">
-                        <text
-                            class="mr50"
-                        >学校名称：{{ userInfo.school_name && (userInfo.school_name.length > 9 ? (userInfo.school_name.substr(0, 9) + '…') : userInfo.school_name) }}</text>
+                        <text class="mr50">学校名称：{{ userInfo.school_name }}</text>
                         <text class="mr50">类别：{{ userInfo.type }}</text>
                     </view>
                     <view class="option-item">
@@ -79,7 +77,7 @@
                     <view class="option-item">
                         <text class="color-333 fs40 mr50 fw-bold">
                             <!-- 昵称： -->
-                            {{ userInfo.nickname && (userInfo.nickname.length > 9 ? (userInfo.nickname.substr(0, 9) + '…') : userInfo.nickname) }}
+                            {{ userInfo.nickname }}
                         </text>
                         <text class="mr50">
                             <!-- 性别： -->
@@ -95,7 +93,9 @@
                         <text class="f1 ellipsis">学校名称：{{ userInfo.school_name }}</text>
                     </view>
                     <view class="option-item">
-                        <text class="mr50">QQ：{{ userInfo.qq }}</text>
+                        <text class="mr50">联系方式：{{ userInfo.qq }}</text>
+                    </view>
+                    <view class="option-item">
                         <text class="f1 ellipsis">邮箱：{{ userInfo.email }}</text>
                     </view>
                 </view>
@@ -151,7 +151,10 @@
                         <text class="column ellipsis">{{ item.create_time }}</text>
                     </view>
                 </view>
-                <view v-else class="options mt30 text-center text-center color-aaa fs28">{{ (accountInfo.id == userId && accountInfo.type == userType) ? "你" : "TA"}}还没有加入过学生组织</view>
+                <view
+                    v-else
+                    class="options mt30 text-center text-center color-aaa fs28"
+                >{{ (accountInfo.id == userId && accountInfo.type == userType) ? "你" : "TA"}}还没有加入过学生组织</view>
             </view>
         </scroll-view>
 
@@ -195,36 +198,20 @@
                 },
                 messageFlag: false,
                 followFlag: false,
-                organizations: []
+                organizations: [],
+                school_name: ""
             };
         },
         onLoad(options) {
             this.userId = options.userId;
             this.userType = options.type;
             this.isOrganization = options.type == 2 ? false : true;
-        },
-        onShow() {
             if (this.isOrganization) {
                 this.title = "组织信息";
             }
-            uni.apiRequest("/api/User/user_info", {
-                data: {
-                    user_id: this.userId,
-                    type: this.userType
-                },
-                success: res => {
-                    this.userInfo = res.data.result;
-                }
-            });
-
-            uni.apiRequest("/api/User/homeOrganization", {
-                data: {
-                    member_id: this.userId
-                },
-                success: res => {
-                    this.organizations = res.data.result.data;
-                }
-            });
+        },
+        onShow() {
+            this.getData();
         },
         methods: {
             inputState(e) {
@@ -232,6 +219,37 @@
             },
             openPopup() {
                 this.$refs.popup_leavingMessage.open();
+            },
+
+            getData() {
+                uni.apiRequest("/api/User/user_info", {
+                    data: {
+                        user_id: this.userId,
+                        type: this.userType
+                    },
+                    success: res => {
+                        res.data.result.school_name =
+                            (res.data.result.school_name &&
+                                res.data.result.school_name.length) > 9
+                                ? res.data.result.school_name.substr(0, 9) + "…"
+                                : res.data.result.school_name;
+
+                        res.data.result.nickname =
+                            (res.data.result.nickname &&
+                            res.data.result.nickname.length) > 9
+                                ? res.data.result.nickname.substr(0, 9) + "…"
+                                : res.data.result.nickname;
+
+                        this.userInfo = res.data.result;
+                    }
+                });
+
+                uni.apiRequest("/api/User/homeOrganization", {
+                    data: {
+                        member_id: this.userId
+                    },
+                    success: res => (this.organizations = res.data.result.data)
+                });
             },
 
             closePopup() {
@@ -445,6 +463,7 @@
     .option-item {
         flex-direction: row;
         align-items: baseline;
+        flex-wrap: wrap;
         margin: 15rpx 0;
     }
 

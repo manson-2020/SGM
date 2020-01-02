@@ -12,7 +12,8 @@
 			"style": {
 				"navigationStyle": "custom",
 				"disableScroll": true,
-				"navigationBarTextStyle": "black"
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": true
 			}
 		},
 		{
@@ -124,7 +125,8 @@
 				"navigationBarTitleText": "",
 				"navigationBarBackgroundColor": "#f9f9f9",
 				"disableScroll": true,
-				"navigationBarTextStyle": "black"
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": true
 			}
 		},
 		{

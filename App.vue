@@ -11,7 +11,7 @@
                         url: "/pages/home"
                     }),
                 fail: _ =>
-                    uni.navigateTo({
+                    uni.redirectTo({
                         url: "/pages/index"
                     })
             });
@@ -26,9 +26,6 @@
 </script>
 
 <style>
-    /* * {
-                    touch-action: none;
-                } */
 
     uni-radio .uni-radio-input.uni-radio-input-checked:before {
         font-size: 16rpx;
@@ -509,6 +506,10 @@
 
     .color-ccc {
         color: #ccc;
+    }
+
+    .color-d4 {
+        color: #d4d4d4;
     }
 
     .color-fff {

@@ -33,7 +33,7 @@
                                 </view>
                                 <view class="ml90">
                                     <view class="content mt38 color-aaa fs30">{{ item.content }}</view>
-                                    <view class="tel color-aaa fs28 mt38">联系电话：1898451251</view>
+                                    <!-- <view class="tel color-aaa fs28 mt38">联系电话：1898451251</view> -->
                                 </view>
                             </view>
                             <view
@@ -62,7 +62,7 @@
                                 </view>
                                 <view class="ml90">
                                     <view class="content mt38 color-aaa fs30">{{ item.content }}</view>
-                                    <view class="tel color-aaa fs28 mt38">联系电话：1898451251</view>
+                                    <!-- <view class="tel color-aaa fs28 mt38">联系电话：1898451251</view> -->
                                 </view>
                             </view>
                             <view

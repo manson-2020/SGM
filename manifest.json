@@ -1,5 +1,5 @@
 {
-    "name" : "校团微",
+    "name" : "学范儿",
     "appid" : "__UNI__473C2FD",
     "description" : "",
     "versionName" : "1.0.0",
@@ -61,15 +61,17 @@
             },
             "splashscreen" : {
                 "android" : {
-                    "hdpi" : ""
+                    "hdpi" : "C:/Users/54594/Desktop/xiaotuanwei/splashes/android/drawable-port-xxxhdpi/screen.png",
+                    "xhdpi" : "C:/Users/54594/Desktop/xiaotuanwei/splashes/android/drawable-port-xxxhdpi/screen.png",
+                    "xxhdpi" : "C:/Users/54594/Desktop/xiaotuanwei/splashes/android/drawable-port-xxxhdpi/screen.png"
                 }
             },
             "icons" : {
                 "android" : {
-                    "hdpi" : "C:/Users/54594/Desktop/android/mipmap-hdpi/ic_launcher.png",
-                    "xhdpi" : "C:/Users/54594/Desktop/android/mipmap-xhdpi/ic_launcher.png",
-                    "xxhdpi" : "C:/Users/54594/Desktop/android/mipmap-xxhdpi/ic_launcher.png",
-                    "xxxhdpi" : "C:/Users/54594/Desktop/android/mipmap-xxxhdpi/ic_launcher.png"
+                    "hdpi" : "C:/Users/54594/Desktop/xiaotuanwei/icons/android/mipmap-hdpi/ic_launcher.png",
+                    "xhdpi" : "C:/Users/54594/Desktop/xiaotuanwei/icons/android/mipmap-xhdpi/ic_launcher.png",
+                    "xxhdpi" : "C:/Users/54594/Desktop/xiaotuanwei/icons/android/mipmap-xxhdpi/ic_launcher.png",
+                    "xxxhdpi" : "C:/Users/54594/Desktop/xiaotuanwei/icons/android/mipmap-xxxhdpi/ic_launcher.png"
                 }
             }
         }

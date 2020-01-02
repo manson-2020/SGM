@@ -9,6 +9,7 @@
                     @input="inputState"
                     :value="inputValue.problem"
                     class="fs28"
+                    maxlength="25"
                     placeholder-class="color-aaa"
                     placeholder="请输入申请加入问题或提示语"
                 />
@@ -22,6 +23,7 @@
                     @input="inputState"
                     :value="inputValue.answer"
                     class="fs28"
+                    maxlength="25"
                     placeholder-class="color-aaa"
                     placeholder="请输入问题答案"
                 />
@@ -68,10 +70,12 @@
                             title: res.data.msg,
                             icon: res.data.code == 200 ? "success" : "none",
                             success: _ => {
-                                setTimeout(() => {
-                                    uni.navigateBack();
-                                    uni.hideToast();
-                                }, 1500);
+                                if (res.data.code == 200) {
+                                    setTimeout(() => {
+                                        uni.navigateBack();
+                                        uni.hideToast();
+                                    }, 1500);
+                                }
                             }
                         });
                     }

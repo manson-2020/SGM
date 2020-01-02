@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App'
+import './components/ican-H5Api'
 
 Vue.config.productionTip = false;
 
